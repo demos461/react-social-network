@@ -1,0 +1,46 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    outline: none;
+    font-family: 'Proxima Nova', Roboto, system-ui, Tahoma, sans-serif;
+    box-sizing: border-box;
+}
+
+.app-wrapper {
+    display: grid;
+    max-width: 1200px;
+    margin: 0 auto;
+    grid-template-areas:
+    'h h'
+    'n c';
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 2fr 10fr;
+    grid-gap: 10px;
+}
+
+.header {
+    grid-area: h;
+    background-color: cadetblue;
+    margin-top: 10px;
+}
+
+.nav {
+    grid-area: n;
+    background-color: cadetblue;
+    padding: 20px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: black;
+}
+
+.content {
+    grid-area: c;
+
+}
+
+.content img {
+    width: 1000px;
+}
