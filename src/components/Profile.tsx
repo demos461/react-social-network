@@ -1,14 +1,14 @@
 import React from 'react';
+import styles from '../styles/Profile.module.css'
+import Posts from "./Posts";
+import tyan from '../assets/images/tyan2.jpg'
 
 const Profile: React.FC = () => {
     return (
-        <div className='content'>
-            <img src='' alt='pictures'/>
+        <div className={styles.profile}>
+            <img src={tyan} alt='pictures'/>
             <div>ava + desc</div>
-            <div>My posts</div>
-            <div>New post</div>
-            <div>Post 1</div>
-            <div>Post 2</div>
+            <Posts/>
         </div>
     );
 };

@@ -1,16 +1,18 @@
 import React from 'react';
+import styles from '../styles/Navbar.module.css'
+import {NavLink} from "react-router-dom";
 
 const Navbar: React.FC = () => {
     return (
-        <nav className='nav'>
-            <div>
-                <a href='https://vk.com/eliasnomatter'>Profile</a>
+        <nav className={styles.nav}>
+            <div className={styles.nav_item}>
+                <NavLink to={'/profile'} activeClassName={styles.active}>Profile</NavLink>
             </div>
-            <div>
-                <a href='https://vk.com/im'>Messages</a>
+            <div className={styles.nav_item}>
+                <NavLink to={'/messages'} activeClassName={styles.active}>Messages</NavLink>
             </div>
-            <div>
-                <a href='https://vk.com/feed'>News</a>
+            <div className={styles.nav_item}>
+                <NavLink to={'/news'} activeClassName={styles.active}>News</NavLink>
             </div>
         </nav>
     );

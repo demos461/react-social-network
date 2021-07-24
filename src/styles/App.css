@@ -19,28 +19,6 @@
     grid-gap: 10px;
 }
 
-.header {
-    grid-area: h;
-    background-color: cadetblue;
-    margin-top: 10px;
-}
-
-.nav {
-    grid-area: n;
-    background-color: cadetblue;
-    padding: 20px;
-}
-
-.nav a {
-    text-decoration: none;
-    color: black;
-}
-
-.content {
+.app-content-wrapper {
     grid-area: c;
-
-}
-
-.content img {
-    width: 1000px;
 }
