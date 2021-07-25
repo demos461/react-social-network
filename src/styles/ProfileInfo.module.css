@@ -1,0 +1,16 @@
+.profileInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+
+}
+
+.profileInfo img {
+    height: 100px;
+    width: 100px;
+}
+
+.descr {
+
+}
