@@ -5,8 +5,17 @@ enum ACTION_TYPE {
     UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT',
 }
 
+const initialState = {
+    posts: [
+        {id: 1, message: 'Hello World!'},
+        {id: 2, message: '=^.^='},
+        {id: 3, message: 'Cat)0))'},
+    ],
+    newPostText: '',
+}
 
-export const profileReducer = (state: ProfilePageType, action: ProfileActionsType) : ProfilePageType => {
+
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType): ProfilePageType => {
     switch (action.type) {
         case ACTION_TYPE.ADD_POST: {
             let newPost = {
@@ -30,7 +39,6 @@ export type ProfileActionsType = AddPostType | UpdateNewPostTextType
 
 export type AddPostType = ReturnType<typeof addPost>
 export type UpdateNewPostTextType = ReturnType<typeof updateNewPostText>
-
 
 
 export const addPost = () => {

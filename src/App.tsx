@@ -5,10 +5,11 @@ import Navbar from './components/Navbar/Navbar';
 import Messages from './components/Messages/Messages';
 import Profile from './components/Profile/Profile';
 import {Route} from 'react-router-dom';
-import {ActionsTypes, RootStateType} from './redux/store';
+import {ActionsTypes} from './redux/store';
+import {AppRootStateType} from './redux/redux-store';
 
 type AppProps = {
-    state: RootStateType;
+    state: AppRootStateType;
     dispatch: (action: ActionsTypes) => void
 };
 
@@ -22,7 +23,7 @@ const App: React.FC<AppProps> = ({state, dispatch}) => {
                     path={'/profile'}
                     render={() => (
                         <Profile
-                            profilePage={state.ProfilePage}
+                            profilePage={state.profilePage}
                             dispatch={dispatch}
                         />
                     )}
@@ -31,7 +32,7 @@ const App: React.FC<AppProps> = ({state, dispatch}) => {
                     path={'/messages'}
                     render={() => (
                         <Messages
-                            messagesPage={state.MessagesPage}
+                            messagesPage={state.messagesPage}
                             dispatch={dispatch}
                         />
                     )}
