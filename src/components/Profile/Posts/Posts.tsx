@@ -1,16 +1,16 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import Post from './Post';
 import styles from '../../../styles/Posts.module.css';
-import {PostType} from '../../../redux/state';
+import {ActionsTypes, PostType} from '../../../redux/store';
+import {addPost, updateNewPostText} from '../../../redux/reducers/profile-reducer';
 
 type PostsProps = {
     posts: Array<PostType>;
-    addPost: () => void
+    dispatch: (action: ActionsTypes) => void
     newPostText: string;
-    changeNewPostText: (post: ChangeEvent<HTMLTextAreaElement>) => void
 };
 
-const Posts: React.FC<PostsProps> = ({posts, addPost, newPostText, changeNewPostText}) => {
+const Posts: React.FC<PostsProps> = ({posts, newPostText, dispatch}) => {
 
 
     return (
@@ -20,10 +20,10 @@ const Posts: React.FC<PostsProps> = ({posts, addPost, newPostText, changeNewPost
         <textarea
             className={styles.textarea}
             placeholder={'Your news...'}
-            onChange={changeNewPostText}
+            onChange={(e) => dispatch(updateNewPostText(e.currentTarget.value))}
             value={newPostText}
         />
-                <div className={styles.btn} onClick={addPost}>
+                <div className={styles.btn} onClick={() => dispatch(addPost())}>
                     Add post
                 </div>
             </div>

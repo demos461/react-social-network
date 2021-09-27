@@ -1,19 +1,18 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import './styles/App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Messages from './components/Messages/Messages';
 import Profile from './components/Profile/Profile';
 import {Route} from 'react-router-dom';
-import {RootStateType} from './redux/state';
+import {ActionsTypes, RootStateType} from './redux/store';
 
 type AppProps = {
     state: RootStateType;
-    addPost: () => void;
-    changeNewPostText: (post: ChangeEvent<HTMLTextAreaElement>) => void;
+    dispatch: (action: ActionsTypes) => void
 };
 
-const App: React.FC<AppProps> = ({state, addPost, changeNewPostText}) => {
+const App: React.FC<AppProps> = ({state, dispatch}) => {
     return (
         <div className="app-wrapper">
             <Header/>
@@ -23,10 +22,8 @@ const App: React.FC<AppProps> = ({state, addPost, changeNewPostText}) => {
                     path={'/profile'}
                     render={() => (
                         <Profile
-                            posts={state.ProfilePage.posts}
-                            newPostText={state.ProfilePage.newPostText}
-                            addPost={addPost}
-                            changeNewPostText={changeNewPostText}
+                            profilePage={state.ProfilePage}
+                            dispatch={dispatch}
                         />
                     )}
                 />
@@ -34,8 +31,8 @@ const App: React.FC<AppProps> = ({state, addPost, changeNewPostText}) => {
                     path={'/messages'}
                     render={() => (
                         <Messages
-                            messages={state.MessagesPage.messages}
-                            dialogs={state.MessagesPage.dialogs}
+                            messagesPage={state.MessagesPage}
+                            dispatch={dispatch}
                         />
                     )}
                 />

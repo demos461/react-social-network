@@ -1,21 +1,23 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import styles from '../../styles/Profile.module.css';
 import ProfileInfo from './ProfileInfo';
 import Posts from './Posts/Posts';
-import {PostType} from '../../redux/state';
+import {ActionsTypes, ProfilePageType} from '../../redux/store';
 
 type ProfileProps = {
-    posts: Array<PostType>;
-    addPost: () => void;
-    newPostText: string;
-    changeNewPostText: (post: ChangeEvent<HTMLTextAreaElement>) => void
+    profilePage: ProfilePageType
+    dispatch: (action: ActionsTypes) => void
 };
 
-const Profile: React.FC<ProfileProps> = ({posts, addPost, newPostText,changeNewPostText}) => {
+const Profile: React.FC<ProfileProps> = ({profilePage, dispatch}) => {
     return (
         <div className={styles.profile}>
             <ProfileInfo/>
-            <Posts posts={posts} addPost={addPost} newPostText={newPostText} changeNewPostText={changeNewPostText}/>
+            <Posts
+                posts={profilePage.posts}
+                newPostText={profilePage.newPostText}
+                dispatch={dispatch}
+            />
         </div>
     );
 };
