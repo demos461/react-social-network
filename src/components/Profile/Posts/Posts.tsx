@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import Post from './Post';
 import styles from '../../../styles/Posts.module.css';
-import {PostType} from '../../../redux/store';
+import {PostType} from '../../../redux/self-made-store';
 
 type PostsProps = {
     posts: Array<PostType>

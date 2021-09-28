@@ -1,4 +1,4 @@
-import {ProfilePageType} from '../store';
+import {ProfilePageType} from '../self-made-store';
 
 enum ACTION_TYPE {
     ADD_POST = 'ADD_POST',

@@ -1,9 +1,15 @@
-import {MessagePageType} from '../store';
+import {DialogType, MessageType} from '../self-made-store';
 
 enum ACTION_TYPE {
     SEND_MESSAGE = 'SEND_MESSAGE',
     UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY',
 }
+
+export type MessagePageType = {
+    dialogs: Array<DialogType>;
+    messages: Array<MessageType>;
+    newMessageBody: string;
+};
 
 const initialState = {
     dialogs: [

@@ -1,21 +1,25 @@
 import React from 'react';
-import {ActionsTypes, MessagePageType} from '../../redux/store';
+import {MessagePageType} from '../../redux/self-made-store';
 import {sendMessage, updateNewMessageBody} from '../../redux/reducers/messages-reducer';
 import Messages from './Messages';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
+import {AppRootStateType} from '../../redux/store';
 
 type MessagesContainerProps = {
     messagesPage: MessagePageType
-    dispatch: (action: ActionsTypes) => void
+    updateNewMessageBody: (body: string) => void
+    sendMessage: () => void
 };
 
-const MessagesContainer: React.FC<MessagesContainerProps> = ({messagesPage, dispatch}) => {
+const MessagesContainer: React.FC<MessagesContainerProps> = ({messagesPage, updateNewMessageBody, sendMessage}) => {
 
     const onChangeMessage = (text: string) => {
-        dispatch(updateNewMessageBody(text))
+        updateNewMessageBody(text)
     }
 
     const onSendMessage = () => {
-        dispatch(sendMessage())
+        sendMessage()
     }
 
     return (
@@ -27,4 +31,18 @@ const MessagesContainer: React.FC<MessagesContainerProps> = ({messagesPage, disp
     );
 };
 
-export default MessagesContainer;
+
+const mapStateToProps = (state: AppRootStateType) => {
+    return {
+        messagesPage: state.messagesPage
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        sendMessage: () => dispatch(sendMessage()),
+        updateNewMessageBody: (body: string) => dispatch(updateNewMessageBody(body)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesContainer);

@@ -3,7 +3,7 @@ import styles from '../../styles/Messages.module.css';
 import Dialog from './Dialog';
 import Message from './Message';
 import s from '../../styles/Messages.module.css';
-import {MessagePageType} from '../../redux/store';
+import {MessagePageType} from '../../redux/self-made-store';
 
 
 type MessagesProps = {
