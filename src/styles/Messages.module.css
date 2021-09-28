@@ -1,16 +1,26 @@
 .dialogs {
     display: grid;
-    grid-template-columns: 2fr 10fr;
+    grid-template-columns: 4fr 10fr;
+    grid-gap: 20px;
 }
 
 .dialog-items {
-
 }
+
 
 .dialog {
-    margin-bottom: 10px;
-
+    //background-color: #eee;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
 }
+
+.dialog:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+
 
 .dialog a {
     text-decoration: none;
@@ -25,12 +35,100 @@
 
 .messages {
     padding-left: 20px;
-    border-left: 2px solid rgba(0,0,0,0.1);
+    border-left: 2px solid rgba(0, 0, 0, 0.1);
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
 
+.inputForm {
+    justify-self: end;
+}
+
+
+.message {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin: 10px;
 
 }
 
-.message {
 
+.message_avatar img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-left: 10px;
+    border: #eee solid 2px;
+
+}
+
+.message_body {
+    background-color: #eee;
+    position: relative;
+    padding: 10px;
+    border-radius: 10px 10px 0 10px;
+    width: 200px;
+}
+
+.message_body:before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+    right: -7px;
+    height: 20px;
+    width: 20px;
+    background: #eee;
+    border-bottom-left-radius: 15px;
+}
+
+.message_body:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    right: -10px;
+    width: 10px;
+    height: 20px;
+    background: white;
+    border-bottom-left-radius: 10px;
+}
+
+
+.message_author {
+    color: cadetblue;
+}
+
+.message_text {
+    margin-top: 5px;
+}
+
+.message_time {
+    text-align: end;
+    margin-right: 5px;
+    color: #8d8d8d;
+}
+
+.textarea {
+    background-color: #eee;
+    resize: none;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn {
+    width: 100px;
+    background-color: cadetblue;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color linear 0.2ms;
 }
 
