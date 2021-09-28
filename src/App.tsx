@@ -2,7 +2,7 @@ import React from 'react';
 import './styles/App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Messages from './components/Messages/Messages';
+import MessagesContainer from './components/Messages/MessagesContainer';
 import Profile from './components/Profile/Profile';
 import {Route} from 'react-router-dom';
 import {ActionsTypes} from './redux/store';
@@ -31,7 +31,7 @@ const App: React.FC<AppProps> = ({state, dispatch}) => {
                 <Route
                     path={'/messages'}
                     render={() => (
-                        <Messages
+                        <MessagesContainer
                             messagesPage={state.messagesPage}
                             dispatch={dispatch}
                         />

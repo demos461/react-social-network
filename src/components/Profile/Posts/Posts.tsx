@@ -1,29 +1,37 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import Post from './Post';
 import styles from '../../../styles/Posts.module.css';
-import {ActionsTypes, PostType} from '../../../redux/store';
-import {addPost, updateNewPostText} from '../../../redux/reducers/profile-reducer';
+import {PostType} from '../../../redux/store';
 
 type PostsProps = {
-    posts: Array<PostType>;
-    dispatch: (action: ActionsTypes) => void
-    newPostText: string;
+    posts: Array<PostType>
+    updateNewPostText: (text: string) => void
+    addPost: () => void
+    newPostText: string
 };
 
-const Posts: React.FC<PostsProps> = ({posts, newPostText, dispatch}) => {
+const Posts: React.FC<PostsProps> = ({posts,newPostText, updateNewPostText, addPost}) => {
+
+
+    const textareaOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        updateNewPostText(e.currentTarget.value)
+    }
+    const addPostOnClick = () => {
+        addPost()
+    }
 
 
     return (
         <>
             <div>My posts</div>
             <div className={styles.posts_form}>
-        <textarea
-            className={styles.textarea}
-            placeholder={'Your news...'}
-            onChange={(e) => dispatch(updateNewPostText(e.currentTarget.value))}
-            value={newPostText}
-        />
-                <div className={styles.btn} onClick={() => dispatch(addPost())}>
+                <textarea
+                    className={styles.textarea}
+                    placeholder={'Your news...'}
+                    onChange={textareaOnChange}
+                    value={newPostText}
+                />
+                <div className={styles.btn} onClick={addPostOnClick}>
                     Add post
                 </div>
             </div>

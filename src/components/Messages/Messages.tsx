@@ -1,17 +1,27 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import styles from '../../styles/Messages.module.css';
 import Dialog from './Dialog';
 import Message from './Message';
-import s from '../../styles/Messages.module.css'
-import {ActionsTypes, MessagePageType} from '../../redux/store';
-import {sendMessage, updateNewMessageBody} from '../../redux/reducers/messages-reducer';
+import s from '../../styles/Messages.module.css';
+import {MessagePageType} from '../../redux/store';
+
 
 type MessagesProps = {
     messagesPage: MessagePageType
-    dispatch: (action: ActionsTypes) => void
+    updateNewMessageBody: (text: string) => void
+    sendMessage: () => void
 };
 
-const Messages: React.FC<MessagesProps> = ({messagesPage, dispatch}) => {
+const Messages: React.FC<MessagesProps> = ({messagesPage, updateNewMessageBody, sendMessage}) => {
+
+    const textareaOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        updateNewMessageBody(e.currentTarget.value)
+    }
+
+    const sendMessageOnClick = () => {
+        sendMessage()
+    }
+
     return (
         <div className={styles.dialogs}>
             <div className={styles.dialogItems}>
@@ -21,12 +31,16 @@ const Messages: React.FC<MessagesProps> = ({messagesPage, dispatch}) => {
             <div className={styles.messages}>
                 {messagesPage.messages &&
                 messagesPage.messages.map((m) => <Message key={m.id} message={m.message}/>)}
-                <textarea
-                    className={s.textarea}
-                    value={messagesPage.newMessageBody}
-                    onChange={(e) => dispatch(updateNewMessageBody(e.currentTarget.value))}
-                />
-                <div className={s.btn} onClick={() => dispatch(sendMessage())}>Send</div>
+                <div className={s.inputForm}>
+                    <textarea
+                        className={s.textarea}
+                        value={messagesPage.newMessageBody}
+                        rows={5}
+                        onChange={textareaOnChange}
+                    />
+                    <div className={s.btn} onClick={sendMessageOnClick}>Send</div>
+                </div>
+
             </div>
         </div>
     );
