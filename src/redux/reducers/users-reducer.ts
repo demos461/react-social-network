@@ -1,7 +1,9 @@
 enum ACTION_TYPE {
     FOLLOW_USER = 'FOLLOW_USER',
     UNFOLLOW_USER = 'UNFOLLOW_USER',
-    SET_USERS = 'SET_USERS'
+    SET_USERS = 'SET_USERS',
+    SET_TOTAL_USERS_COUNT = 'SET_TOTAL_COUNT',
+    CHANGE_CURRENT_PAGE = 'CHANGE_CURRENT_PAGE',
 }
 
 
@@ -20,15 +22,21 @@ export type UserType = {
 
 export type UsersStateType = {
     users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 
 
-const initialState = {
-    users: []
+const initialState: UsersStateType = {
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 1
 }
 
 
-export const usersReducer = (state: UsersStateType = initialState, action: ActionsType) => {
+export const usersReducer = (state = initialState, action: ActionsType) => {
     switch (action.type) {
         case ACTION_TYPE.FOLLOW_USER: {
             return {
@@ -45,7 +53,19 @@ export const usersReducer = (state: UsersStateType = initialState, action: Actio
         case ACTION_TYPE.SET_USERS: {
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: [...action.users]
+            }
+        }
+        case ACTION_TYPE.SET_TOTAL_USERS_COUNT: {
+            return {
+                ...state,
+                totalUsersCount: action.usersCount
+            }
+        }
+        case ACTION_TYPE.CHANGE_CURRENT_PAGE: {
+            return {
+                ...state,
+                currentPage: action.page
             }
         }
         default:
@@ -58,7 +78,9 @@ export const usersReducer = (state: UsersStateType = initialState, action: Actio
 type ActionsType =
     ReturnType<typeof follow> |
     ReturnType<typeof unfollow> |
-    ReturnType<typeof setUsers>
+    ReturnType<typeof setUsers> |
+    ReturnType<typeof changeCurrentPage> |
+    ReturnType<typeof setTotalUsersCount>
 
 export const follow = (userId: number) => {
     return {
@@ -78,5 +100,19 @@ export const setUsers = (users: UserType[]) => {
     return {
         type: ACTION_TYPE.SET_USERS,
         users,
+    } as const
+}
+
+export const setTotalUsersCount = (usersCount: number) => {
+    return {
+        type: ACTION_TYPE.SET_TOTAL_USERS_COUNT,
+        usersCount,
+    } as const
+}
+
+export const changeCurrentPage = (page: number) => {
+    return {
+        type: ACTION_TYPE.CHANGE_CURRENT_PAGE,
+        page,
     } as const
 }

@@ -7,9 +7,12 @@ type UsersProps = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     users: UserType[]
+    pages: number[]
+    currentPage: number
+    onPageChanged: (page: number) => void
 }
 
-const Users: React.FC<UsersProps> = ({users, unfollow, follow}) => {
+const Users: React.FC<UsersProps> = ({users, unfollow, follow, pages, currentPage, onPageChanged}) => {
     return (
         <div>
             {users &&
@@ -33,6 +36,16 @@ const Users: React.FC<UsersProps> = ({users, unfollow, follow}) => {
 
             ))
             }
+            <div className={s.pagination}>
+                {pages.map(num =>
+                    <div
+                        onClick={() => onPageChanged(num)}
+                        className={`${s.pageNumber} ${currentPage === num ? s.active : ''}`}
+                    >
+                        {num}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
