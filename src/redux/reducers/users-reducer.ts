@@ -4,16 +4,17 @@ enum ACTION_TYPE {
     SET_USERS = 'SET_USERS'
 }
 
+
 export type UserType = {
-    id: number
-    photoUrl: string
-    followed: boolean
     name: string
-    status: string
-    location: {
-        city: string,
-        country: string
+    id: number
+    uniqueUrlName: string | undefined
+    followed: boolean
+    photos: {
+        small: string | undefined
+        large: string | undefined
     }
+    status: string | null
 }
 
 
@@ -23,32 +24,7 @@ export type UsersStateType = {
 
 
 const initialState = {
-    users: [
-        {
-            id: 1,
-            photoUrl: 'https://icon-library.com/images/avatar-icon-png/avatar-icon-png-8.jpg',
-            followed: false,
-            name: 'Ilya',
-            status: 'AAAAAAA',
-            location: {city: 'Minsk', country: 'Belarus'}
-        },
-        {
-            id: 2,
-            photoUrl: 'https://icon-library.com/images/avatar-icon-png/avatar-icon-png-8.jpg',
-            followed: false,
-            name: 'Alexey',
-            status: 'Hello',
-            location: {city: 'Moscow', country: 'Russia'}
-        },
-        {
-            id: 3,
-            photoUrl: 'https://icon-library.com/images/avatar-icon-png/avatar-icon-png-8.jpg',
-            followed: true,
-            name: 'Ivan',
-            status: 'Hey',
-            location: {city: 'Kiev', country: 'Ukraine'}
-        },
-    ]
+    users: []
 }
 
 

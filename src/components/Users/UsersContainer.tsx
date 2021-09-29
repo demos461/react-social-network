@@ -1,9 +1,10 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import Users from './Users';
 import {AppRootStateType} from '../../redux/store';
 import {follow, setUsers, unfollow, UsersStateType, UserType} from '../../redux/reducers/users-reducer';
 import {Dispatch} from 'redux';
+import axios from 'axios';
 
 type UsersContainerProps = {
     follow: (userId: number) => void
@@ -12,26 +13,37 @@ type UsersContainerProps = {
     users: UserType[]
 }
 
-const UsersContainer: FC<UsersContainerProps> = ({users, setUsers, unfollow, follow}) => {
+class UsersContainer extends React.Component<UsersContainerProps> {
 
-
-    const followOnClick = (userId: number) => {
-        follow(userId)
+    componentDidMount() {
+        if (this.props.users.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(res => {
+                this.props.setUsers(res.data.items)
+            })
+        }
     }
 
-    const unfollowOnClick = (userId: number) => {
-        unfollow(userId)
+
+    render() {
+        let {users, unfollow, follow} = this.props;
+
+        const followOnClick = (userId: number) => {
+            follow(userId)
+        }
+
+        const unfollowOnClick = (userId: number) => {
+            unfollow(userId)
+        }
+
+        return (
+            <Users
+                users={users}
+                follow={followOnClick}
+                unfollow={unfollowOnClick}
+            />
+        );
     }
-
-
-    return (
-        <Users
-            users={users}
-            follow={followOnClick}
-            unfollow={unfollowOnClick}
-        />
-    );
-};
+}
 
 
 const mapStateToProps = (state: AppRootStateType): UsersStateType => {
