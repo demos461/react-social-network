@@ -1,9 +1,18 @@
-import {ProfilePageType} from '../self-made-store';
-
 enum ACTION_TYPE {
     ADD_POST = 'ADD_POST',
     UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT',
 }
+
+export type PostType = {
+    id: number;
+    message: string;
+};
+
+export type ProfileStateType = {
+    posts: Array<PostType>;
+    newPostText: string;
+};
+
 
 const initialState = {
     posts: [
@@ -15,7 +24,7 @@ const initialState = {
 }
 
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType): ProfilePageType => {
+export const profileReducer = (state: ProfileStateType = initialState, action: ProfileActionsType): ProfileStateType => {
     switch (action.type) {
         case ACTION_TYPE.ADD_POST: {
             return {

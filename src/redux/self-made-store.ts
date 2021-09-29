@@ -1,38 +1,37 @@
 import {MessagesActionsType, messagesReducer} from './reducers/messages-reducer';
 import {ProfileActionsType, profileReducer} from './reducers/profile-reducer';
 
-export type PostType = {
+type PostType = {
     id: number;
     message: string;
 };
 
-export type DialogType = {
+type DialogType = {
     id: number;
     name: string;
 };
 
-export type MessageType = {
+type MessageType = {
     id: number;
     message: string;
 };
-
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostType>;
     newPostText: string;
 };
 
-export type MessagePageType = {
+type MessagePageType = {
     dialogs: Array<DialogType>;
     messages: Array<MessageType>;
     newMessageBody: string;
 };
 
-export type RootStateType = {
+type RootStateType = {
     ProfilePage: ProfilePageType;
     MessagesPage: MessagePageType;
 };
 
-export  type RootStoreType = {
+type RootStoreType = {
     _state: RootStateType
     _callSubscriber: () => void
     getState: () => RootStateType
@@ -40,9 +39,9 @@ export  type RootStoreType = {
     dispatch: (action: ActionsTypes) => void
 }
 
-export type ActionsTypes = MessagesActionsType | ProfileActionsType
+type ActionsTypes = MessagesActionsType | ProfileActionsType
 
-export let selfMadeStore: RootStoreType = {
+let selfMadeStore: RootStoreType = {
     _state: {
         ProfilePage: {
             posts: [

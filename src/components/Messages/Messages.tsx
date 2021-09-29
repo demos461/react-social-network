@@ -3,16 +3,18 @@ import styles from '../../styles/Messages.module.css';
 import Dialog from './Dialog';
 import Message from './Message';
 import s from '../../styles/Messages.module.css';
-import {MessagePageType} from '../../redux/self-made-store';
+import {DialogType, MessageType} from '../../redux/reducers/messages-reducer';
 
 
 type MessagesProps = {
-    messagesPage: MessagePageType
+    dialogs: DialogType[]
+    messages: MessageType[]
+    newMessageBody: string
     updateNewMessageBody: (text: string) => void
     sendMessage: () => void
 };
 
-const Messages: React.FC<MessagesProps> = ({messagesPage, updateNewMessageBody, sendMessage}) => {
+const Messages: React.FC<MessagesProps> = ({dialogs, messages, newMessageBody, updateNewMessageBody, sendMessage}) => {
 
     const textareaOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         updateNewMessageBody(e.currentTarget.value)
@@ -25,16 +27,16 @@ const Messages: React.FC<MessagesProps> = ({messagesPage, updateNewMessageBody, 
     return (
         <div className={styles.dialogs}>
             <div className={styles.dialogItems}>
-                {messagesPage.dialogs &&
-                messagesPage.dialogs.map((d) => <Dialog key={d.id} name={d.name} id={d.id}/>)}
+                {dialogs &&
+                dialogs.map((d) => <Dialog key={d.id} name={d.name} id={d.id}/>)}
             </div>
             <div className={styles.messages}>
-                {messagesPage.messages &&
-                messagesPage.messages.map((m) => <Message key={m.id} message={m.message}/>)}
+                {messages &&
+                messages.map((m) => <Message key={m.id} message={m.message}/>)}
                 <div className={s.inputForm}>
                     <textarea
                         className={s.textarea}
-                        value={messagesPage.newMessageBody}
+                        value={newMessageBody}
                         rows={5}
                         onChange={textareaOnChange}
                     />

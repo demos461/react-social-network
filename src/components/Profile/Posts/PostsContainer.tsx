@@ -1,6 +1,10 @@
 import React from 'react';
-import {PostType} from '../../../redux/self-made-store';
-import {addPost, updateNewPostText} from '../../../redux/reducers/profile-reducer';
+import {
+    addPost,
+    PostType,
+    ProfileStateType,
+    updateNewPostText
+} from '../../../redux/reducers/profile-reducer';
 import Posts from './Posts';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../../redux/store';
@@ -24,10 +28,11 @@ const PostsContainer: React.FC<PostsContainerProps> = ({posts, newPostText, addP
     );
 };
 
-const mapStateToProps = (state: AppRootStateType) => {
+const mapStateToProps = (state: AppRootStateType) : ProfileStateType => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
+
     }
 }
 

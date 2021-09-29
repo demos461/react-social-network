@@ -1,18 +1,30 @@
 import React from 'react';
-import {MessagePageType} from '../../redux/self-made-store';
-import {sendMessage, updateNewMessageBody} from '../../redux/reducers/messages-reducer';
+import {
+    DialogType, MessagesStateType,
+    MessageType,
+    sendMessage,
+    updateNewMessageBody
+} from '../../redux/reducers/messages-reducer';
 import Messages from './Messages';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import {AppRootStateType} from '../../redux/store';
 
 type MessagesContainerProps = {
-    messagesPage: MessagePageType
+    dialogs: DialogType[]
+    messages: MessageType[]
+    newMessageBody: string
     updateNewMessageBody: (body: string) => void
     sendMessage: () => void
 };
 
-const MessagesContainer: React.FC<MessagesContainerProps> = ({messagesPage, updateNewMessageBody, sendMessage}) => {
+const MessagesContainer: React.FC<MessagesContainerProps> = ({
+                                                                 dialogs,
+                                                                 messages,
+                                                                 newMessageBody,
+                                                                 updateNewMessageBody,
+                                                                 sendMessage
+                                                             }) => {
 
     const onChangeMessage = (text: string) => {
         updateNewMessageBody(text)
@@ -24,7 +36,9 @@ const MessagesContainer: React.FC<MessagesContainerProps> = ({messagesPage, upda
 
     return (
         <Messages
-            messagesPage={messagesPage}
+            dialogs={dialogs}
+            messages={messages}
+            newMessageBody={newMessageBody}
             updateNewMessageBody={onChangeMessage}
             sendMessage={onSendMessage}
         />
@@ -32,9 +46,11 @@ const MessagesContainer: React.FC<MessagesContainerProps> = ({messagesPage, upda
 };
 
 
-const mapStateToProps = (state: AppRootStateType) => {
+const mapStateToProps = (state: AppRootStateType): MessagesStateType => {
     return {
-        messagesPage: state.messagesPage
+        dialogs: state.messagesPage.dialogs,
+        messages: state.messagesPage.messages,
+        newMessageBody: state.messagesPage.newMessageBody
     }
 }
 

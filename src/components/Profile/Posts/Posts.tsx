@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import Post from './Post';
 import styles from '../../../styles/Posts.module.css';
-import {PostType} from '../../../redux/self-made-store';
+import {PostType} from '../../../redux/reducers/profile-reducer';
 
 type PostsProps = {
     posts: Array<PostType>
@@ -10,7 +10,7 @@ type PostsProps = {
     newPostText: string
 };
 
-const Posts: React.FC<PostsProps> = ({posts,newPostText, updateNewPostText, addPost}) => {
+const Posts: React.FC<PostsProps> = ({posts, newPostText, updateNewPostText, addPost}) => {
 
 
     const textareaOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {

@@ -1,15 +1,25 @@
-import {DialogType, MessageType} from '../self-made-store';
-
 enum ACTION_TYPE {
     SEND_MESSAGE = 'SEND_MESSAGE',
     UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY',
 }
 
-export type MessagePageType = {
+export type DialogType = {
+    id: number;
+    name: string;
+};
+
+export type MessageType = {
+    id: number;
+    message: string;
+};
+
+export type MessagesStateType = {
     dialogs: Array<DialogType>;
     messages: Array<MessageType>;
     newMessageBody: string;
 };
+
+
 
 const initialState = {
     dialogs: [
@@ -28,7 +38,7 @@ const initialState = {
 }
 
 
-export const messagesReducer = (state: MessagePageType = initialState, action: MessagesActionsType): MessagePageType => {
+export const messagesReducer = (state: MessagesStateType = initialState, action: MessagesActionsType): MessagesStateType => {
     switch (action.type) {
         case ACTION_TYPE.SEND_MESSAGE: {
             let newMessageBody = state.newMessageBody
