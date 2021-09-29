@@ -32,13 +32,15 @@ export const messagesReducer = (state: MessagePageType = initialState, action: M
     switch (action.type) {
         case ACTION_TYPE.SEND_MESSAGE: {
             let newMessageBody = state.newMessageBody
-            state.messages.push({id: 6, message: newMessageBody})
-            state.newMessageBody = '';
-            return state
+            const copyState = {...state}
+            copyState.messages = [...state.messages, {id: 6, message: newMessageBody}]
+            copyState.newMessageBody = '';
+            return copyState
         }
         case ACTION_TYPE.UPDATE_NEW_MESSAGE_BODY: {
-            state.newMessageBody = action.body
-            return state
+            const copyState = {...state}
+            copyState.newMessageBody = action.body
+            return copyState
         }
         default:
             return state
