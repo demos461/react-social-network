@@ -1,6 +1,7 @@
 enum ACTION_TYPE {
     ADD_POST = 'ADD_POST',
     UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT',
+    SET_USER_PROFILE = 'SET_USER_PROFILE'
 }
 
 export type PostType = {
@@ -8,13 +9,57 @@ export type PostType = {
     message: string;
 };
 
+export type UserProfileType = {
+    aboutMe: string | undefined
+    contacts: {
+        facebook: string | undefined
+        website: string | undefined
+        vk: string | undefined
+        twitter: string | undefined
+        instagram: string | undefined
+        youtube: string | undefined
+        github: string | undefined
+        mainLink: string | undefined
+    }
+    lookingForAJob: boolean
+    lookingForAJobDescription: string | undefined
+    fullName: string | undefined
+    userId: number
+    photos: {
+        small: string | undefined
+        large: string | undefined
+    }
+}
+
 export type ProfileStateType = {
+    profile: UserProfileType
     posts: Array<PostType>;
     newPostText: string;
-};
+}
 
 
-const initialState = {
+const initialState: ProfileStateType = {
+    profile: {
+        aboutMe: undefined,
+        contacts: {
+            facebook: undefined,
+            website: undefined,
+            vk: undefined,
+            twitter: undefined,
+            instagram: undefined,
+            youtube: undefined,
+            github: undefined,
+            mainLink: undefined,
+        },
+        lookingForAJob: false,
+        lookingForAJobDescription: undefined,
+        fullName: undefined,
+        userId: 0,
+        photos: {
+            small: undefined,
+            large: undefined,
+        },
+    },
     posts: [
         {id: 1, message: 'Hello World!'},
         {id: 2, message: '=^.^='},
@@ -39,16 +84,21 @@ export const profileReducer = (state: ProfileStateType = initialState, action: P
                 newPostText: action.newText
             }
         }
+        case ACTION_TYPE.SET_USER_PROFILE: {
+            return {
+                ...state,
+                profile: action.userProfile
+            }
+        }
         default:
             return state
     }
 }
 
-export type ProfileActionsType = AddPostType | UpdateNewPostTextType
-
-export type AddPostType = ReturnType<typeof addPost>
-export type UpdateNewPostTextType = ReturnType<typeof updateNewPostText>
-
+export type ProfileActionsType =
+    ReturnType<typeof addPost> |
+    ReturnType<typeof updateNewPostText> |
+    ReturnType<typeof setUserProfile>
 
 export const addPost = () => {
     return {
@@ -60,5 +110,12 @@ export const updateNewPostText = (newText: string) => {
     return {
         type: ACTION_TYPE.UPDATE_NEW_POST_TEXT,
         newText,
+    } as const
+}
+
+export const setUserProfile = (userProfile: UserProfileType) => {
+    return {
+        type: ACTION_TYPE.SET_USER_PROFILE,
+        userProfile
     } as const
 }

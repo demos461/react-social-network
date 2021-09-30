@@ -27,11 +27,10 @@ const PostsContainer: React.FC<PostsContainerProps> = ({posts, newPostText, addP
     );
 };
 
-const mapStateToProps = (state: AppRootStateType): ProfileStateType => {
+const mapStateToProps = (state: AppRootStateType) => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
-
     }
 }
 

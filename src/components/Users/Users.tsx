@@ -2,6 +2,7 @@ import React from 'react';
 import {UserType} from '../../redux/reducers/users-reducer';
 import s from '../../styles/Users.module.css'
 import userIcon from '../../assets/images/user.png'
+import {NavLink} from 'react-router-dom';
 
 type UsersProps = {
     follow: (userId: number) => void
@@ -19,7 +20,9 @@ const Users: React.FC<UsersProps> = ({users, unfollow, follow, pages, currentPag
             users.map(u => (
                 <div className={s.user}>
                     <div className={s.userAvatar}>
-                        <img src={u.photos.small ? u.photos.small : userIcon} alt="user-avatar"/>
+                        <NavLink to={'/profile/' + u.id}>
+                            <img src={u.photos.small ? u.photos.small : userIcon} alt="user-avatar"/>
+                        </NavLink>
                         {u.followed
                             ? <div onClick={() => unfollow(u.id)} className={s.btn}>Unfollow</div>
                             : <div onClick={() => follow(u.id)} className={s.btn}>Follow</div>
@@ -27,9 +30,9 @@ const Users: React.FC<UsersProps> = ({users, unfollow, follow, pages, currentPag
 
                     </div>
                     <div>
-                        <div className={s.userName}>
+                        <NavLink to={'/profile/' + u.id} className={s.userName}>
                             {u.name}
-                        </div>
+                        </NavLink>
                         <div className={s.userStatus}>{u.status}</div>
                     </div>
                 </div>
