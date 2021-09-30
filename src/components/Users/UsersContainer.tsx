@@ -10,7 +10,6 @@ import {
     UsersStateType,
     UserType
 } from '../../redux/reducers/users-reducer';
-import {Dispatch} from 'redux';
 import axios from 'axios';
 import Preloader from '../Preloader/Preloader';
 
@@ -94,15 +93,12 @@ const mapStateToProps = (state: AppRootStateType): UsersStateType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        follow: (userId: number) => dispatch(follow(userId)),
-        unfollow: (userId: number) => dispatch(unfollow(userId)),
-        setUsers: (users: UserType[]) => dispatch(setUsers(users)),
-        changeCurrentPage: (page: number) => dispatch(changeCurrentPage(page)),
-        setTotalUsersCount: (usersCount: number) => dispatch(setTotalUsersCount(usersCount)),
-        toggleIsFetching: (isFetching: boolean) => dispatch(toggleIsFetching(isFetching)),
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    changeCurrentPage,
+    setTotalUsersCount,
+    toggleIsFetching
+})(UsersContainer);

@@ -8,7 +8,6 @@ import {
 import Posts from './Posts';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../../redux/store';
-import {Dispatch} from 'redux';
 
 type PostsContainerProps = {
     posts: Array<PostType>
@@ -28,7 +27,7 @@ const PostsContainer: React.FC<PostsContainerProps> = ({posts, newPostText, addP
     );
 };
 
-const mapStateToProps = (state: AppRootStateType) : ProfileStateType => {
+const mapStateToProps = (state: AppRootStateType): ProfileStateType => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
@@ -36,11 +35,5 @@ const mapStateToProps = (state: AppRootStateType) : ProfileStateType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        addPost: () => dispatch(addPost()),
-        updateNewPostText: (text: string) => dispatch(updateNewPostText(text)),
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer);
+export default connect(mapStateToProps, {addPost, updateNewPostText})(PostsContainer);
