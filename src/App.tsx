@@ -14,7 +14,7 @@ const App: React.FC = () => {
             <Navbar/>
             <div className="app-content-wrapper">
                 <Route
-                    path={'/profile'}
+                    path={'/profile/:userId?'}
                     render={() => <ProfileContainer/>}
                 />
                 <Route
