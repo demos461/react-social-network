@@ -4,6 +4,7 @@ enum ACTION_TYPE {
     SET_USERS = 'SET_USERS',
     SET_TOTAL_USERS_COUNT = 'SET_TOTAL_COUNT',
     CHANGE_CURRENT_PAGE = 'CHANGE_CURRENT_PAGE',
+    TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING',
 }
 
 
@@ -25,6 +26,7 @@ export type UsersStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 
 
@@ -32,7 +34,8 @@ const initialState: UsersStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false,
 }
 
 
@@ -68,6 +71,12 @@ export const usersReducer = (state = initialState, action: ActionsType) => {
                 currentPage: action.page
             }
         }
+        case ACTION_TYPE.TOGGLE_IS_FETCHING: {
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
+        }
         default:
             return state
 
@@ -80,7 +89,8 @@ type ActionsType =
     ReturnType<typeof unfollow> |
     ReturnType<typeof setUsers> |
     ReturnType<typeof changeCurrentPage> |
-    ReturnType<typeof setTotalUsersCount>
+    ReturnType<typeof setTotalUsersCount> |
+    ReturnType<typeof toggleIsFetching>
 
 export const follow = (userId: number) => {
     return {
@@ -114,5 +124,12 @@ export const changeCurrentPage = (page: number) => {
     return {
         type: ACTION_TYPE.CHANGE_CURRENT_PAGE,
         page,
+    } as const
+}
+
+export const toggleIsFetching = (isFetching: boolean) => {
+    return {
+        type: ACTION_TYPE.TOGGLE_IS_FETCHING,
+        isFetching,
     } as const
 }
