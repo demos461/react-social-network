@@ -2,7 +2,6 @@ import React from 'react';
 import {
     addPost,
     PostType,
-    ProfileStateType,
     updateNewPostText
 } from '../../../redux/reducers/profile-reducer';
 import Posts from './Posts';
