@@ -10,11 +10,17 @@
     margin-bottom: 10px;
     font-size: 18px;
 
+
+}
+
+.nav_item a:hover {
+    color: gold;
 }
 
 .nav_item a {
     text-decoration: none;
     color: white;
+    transition: color linear 0.2s;
 }
 
 

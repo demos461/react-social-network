@@ -1,16 +1,42 @@
 .profileInfo {
     display: flex;
-    align-items: center;
     gap: 10px;
     margin: 10px 0;
+    position: relative;
+}
+
+.lookingForAJob {
+    text-align: center;
+    font-weight: bold;
+    color: green;
+    padding: 5px 0;
+    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 5px;
+}
+
+.lookingForAJobDescription {
+    font-size: 14px;
+    width: 200px;
+    text-align: center;
 
 }
 
-.profileInfo img {
-    height: 100px;
-    width: 100px;
+.avatar img {
+    height: 200px;
+    width: 200px;
 }
 
-.descr {
+.fullName {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.aboutMe {
+    padding: 10px 0;
+    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 10px;
+}
+
+.contacts {
 
 }

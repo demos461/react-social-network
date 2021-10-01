@@ -9,7 +9,13 @@
 
 .userName {
     font-size: 18px;
-    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
+.userName:hover {
+    color: gold;
+
 }
 
 .userStatus {
@@ -48,5 +54,36 @@
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
-    transition: background-color linear 0.2ms;
+    transition: color linear 0.2ms;
+}
+
+.btn:hover {
+    color: gold;
+}
+
+.pageNumber {
+    margin: 0 5px;
+    transition: color linear 0.2s;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.pageNumber.active {
+    color: white;
+    font-weight: bold;
+    background-color: cadetblue;
+}
+
+.pageNumber:hover {
+    cursor: pointer;
+    color: gold;
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    margin: 20px auto 0 auto;
+    width: 400px;
+    overflow-y: hidden;
+    overflow-x: auto;
 }

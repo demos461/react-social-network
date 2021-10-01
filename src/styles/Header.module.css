@@ -1,6 +1,7 @@
 .header {
     grid-area: h;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     background-color: cadetblue;
     margin-top: 10px;
@@ -9,4 +10,21 @@
     color: white;
     font-weight: bold;
 }
+
+.loginBtn {
+    width: 80px;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    border: 2px solid white;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.login {
+    padding: 5px;
+    text-align: center;
+    color: white;
+}
+
 
