@@ -11,21 +11,36 @@ type UsersProps = {
     pages: number[]
     currentPage: number
     onPageChanged: (page: number) => void
+    followingInProgress: number[]
 }
 
-const Users: React.FC<UsersProps> = ({users, unfollow, follow, pages, currentPage, onPageChanged}) => {
+const Users: React.FC<UsersProps> = ({
+                                         users,
+                                         unfollow,
+                                         follow,
+                                         pages,
+                                         currentPage,
+                                         onPageChanged,
+                                         followingInProgress
+                                     }) => {
     return (
         <div>
             {users &&
             users.map(u => (
-                <div className={s.user}>
+                <div key={u.id} className={s.user}>
                     <div className={s.userAvatar}>
                         <NavLink to={'/profile/' + u.id}>
                             <img src={u.photos.small ? u.photos.small : userIcon} alt="user-avatar"/>
                         </NavLink>
                         {u.followed
-                            ? <div onClick={() => unfollow(u.id)} className={s.btn}>Unfollow</div>
-                            : <div onClick={() => follow(u.id)} className={s.btn}>Follow</div>
+                            ? <button
+                                onClick={() => unfollow(u.id)}
+                                disabled={followingInProgress.some(id => id === u.id)}
+                                className={s.btn}>Unfollow</button>
+                            : <button
+                                onClick={() => follow(u.id)}
+                                disabled={followingInProgress.some(id => id === u.id)}
+                                className={s.btn}>Follow</button>
                         }
 
                     </div>
@@ -42,6 +57,7 @@ const Users: React.FC<UsersProps> = ({users, unfollow, follow, pages, currentPag
             <div className={s.pagination}>
                 {pages.map(num =>
                     <div
+                        key={num}
                         onClick={() => onPageChanged(num)}
                         className={`${s.pageNumber} ${currentPage === num ? s.active : ''}`}
                     >

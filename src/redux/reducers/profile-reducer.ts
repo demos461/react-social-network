@@ -1,3 +1,6 @@
+import {Dispatch} from 'redux';
+import {usersAPI} from '../../api/API';
+
 enum ACTION_TYPE {
     ADD_POST = 'ADD_POST',
     UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT',
@@ -118,4 +121,11 @@ export const setUserProfile = (userProfile: UserProfileType) => {
         type: ACTION_TYPE.SET_USER_PROFILE,
         userProfile
     } as const
+}
+
+
+export const getUserProfile = (userId: number) => (dispatch: Dispatch<ProfileActionsType>) => {
+    usersAPI.getUserProfile(userId).then(data => {
+        dispatch(setUserProfile(data))
+    })
 }

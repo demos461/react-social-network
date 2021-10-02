@@ -47,6 +47,7 @@
 }
 
 .btn {
+    border: none;
     width: 100px;
     background-color: cadetblue;
     text-align: center;
@@ -59,6 +60,12 @@
 
 .btn:hover {
     color: gold;
+}
+
+.btn:disabled {
+    background-color: gray;
+    color: lightgray;
+    cursor: default;
 }
 
 .pageNumber {
