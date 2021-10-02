@@ -6,10 +6,10 @@ import {
     changeCurrentPage, follow,
     getUsers, setTotalUsersCount,
     unfollow,
-    UsersStateType,
     UserType
 } from '../../redux/reducers/users-reducer';
 import Preloader from '../Preloader/Preloader';
+import {Redirect} from 'react-router-dom';
 
 type UsersContainerProps = {
     follow: (userId: number) => void
@@ -23,6 +23,7 @@ type UsersContainerProps = {
     isFetching: boolean
     followingInProgress: number[]
     getUsers: (currentPage: number, pageSize: number) => void
+    isAuth: boolean
 }
 
 class UsersContainer extends React.Component<UsersContainerProps> {
@@ -47,7 +48,8 @@ class UsersContainer extends React.Component<UsersContainerProps> {
             pageSize,
             currentPage,
             isFetching,
-            followingInProgress
+            followingInProgress,
+            isAuth
         } = this.props;
 
         let pagesCount = Math.ceil(totalUsersCount / pageSize)
@@ -63,6 +65,8 @@ class UsersContainer extends React.Component<UsersContainerProps> {
         const unfollowOnClick = (userId: number) => {
             this.props.unfollow(userId)
         }
+
+        if (!isAuth) return <Redirect to={'/login'}/>
 
         return (
             <>
@@ -83,7 +87,7 @@ class UsersContainer extends React.Component<UsersContainerProps> {
 }
 
 
-const mapStateToProps = (state: AppRootStateType): UsersStateType => {
+const mapStateToProps = (state: AppRootStateType) => {
     return {
         users: state.users.users,
         totalUsersCount: state.users.totalUsersCount,
@@ -91,6 +95,7 @@ const mapStateToProps = (state: AppRootStateType): UsersStateType => {
         currentPage: state.users.currentPage,
         isFetching: state.users.isFetching,
         followingInProgress: state.users.followingInProgress,
+        isAuth: state.auth.isAuth
 
     }
 }

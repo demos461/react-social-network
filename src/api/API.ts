@@ -10,24 +10,13 @@ const instance = axios.create({
 
 
 export const usersAPI = {
-    getUsers: (currentPage: number = 1, pageSize: number = 5) => {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(res => res.data)
-    },
-    getUserProfile: (userId: number) => {
-        return instance.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(res => res.data)
-    },
-    follow: (userId: number) => {
-        return instance.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`).then(res => res.data)
-    },
-    unfollow: (userId: number) => {
-        return instance.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`).then(res => res.data)
-    },
+    getUsers: (currentPage: number = 1, pageSize: number = 5) => instance.get(`users?page=${currentPage}&count=${pageSize}`).then(res => res.data),
+    getUserProfile: (userId: number) => instance.get(`profile/${userId}`).then(res => res.data),
+    follow: (userId: number) => instance.post(`follow/${userId}`).then(res => res.data),
+    unfollow: (userId: number) => instance.delete(`follow/${userId}`).then(res => res.data),
 }
 
 export const authAPI = {
-    getAuthUser: () => {
-        return instance.get(`https://social-network.samuraijs.com/api/1.0/auth/me`).then(res => res.data)
-    }
-
+    getAuthUser: () => instance.get(`auth/me`).then(res => res.data)
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    DialogType, MessagesStateType,
+    DialogType,
     MessageType,
     sendMessage,
     updateNewMessageBody
@@ -9,6 +9,7 @@ import Messages from './Messages';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import {AppRootStateType} from '../../redux/store';
+import {Redirect} from 'react-router-dom';
 
 type MessagesContainerProps = {
     dialogs: DialogType[]
@@ -16,6 +17,7 @@ type MessagesContainerProps = {
     newMessageBody: string
     updateNewMessageBody: (body: string) => void
     sendMessage: () => void
+    isAuth: boolean
 };
 
 const MessagesContainer: React.FC<MessagesContainerProps> = ({
@@ -23,7 +25,8 @@ const MessagesContainer: React.FC<MessagesContainerProps> = ({
                                                                  messages,
                                                                  newMessageBody,
                                                                  updateNewMessageBody,
-                                                                 sendMessage
+                                                                 sendMessage,
+                                                                 isAuth
                                                              }) => {
 
     const onChangeMessage = (text: string) => {
@@ -33,6 +36,8 @@ const MessagesContainer: React.FC<MessagesContainerProps> = ({
     const onSendMessage = () => {
         sendMessage()
     }
+
+    if (!isAuth) return <Redirect to={'/login'}/>
 
     return (
         <Messages
@@ -46,11 +51,13 @@ const MessagesContainer: React.FC<MessagesContainerProps> = ({
 };
 
 
-const mapStateToProps = (state: AppRootStateType): MessagesStateType => {
+const mapStateToProps = (state: AppRootStateType) => {
     return {
         dialogs: state.messagesPage.dialogs,
         messages: state.messagesPage.messages,
-        newMessageBody: state.messagesPage.newMessageBody
+        newMessageBody: state.messagesPage.newMessageBody,
+        isAuth: state.auth.isAuth
+
     }
 }
 
