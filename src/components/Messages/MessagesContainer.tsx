@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {
     DialogType,
     MessageType,
@@ -7,9 +7,9 @@ import {
 } from '../../redux/reducers/messages-reducer';
 import Messages from './Messages';
 import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
+import {compose, Dispatch} from 'redux';
 import {AppRootStateType} from '../../redux/store';
-import { WithAuthRedirect } from '../../hoc/withAuthRedirect';
+import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type MessagesContainerProps = {
     dialogs: DialogType[]
@@ -62,4 +62,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }
 
-export default WithAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(MessagesContainer));
+export default compose<ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect
+)(MessagesContainer)
+
