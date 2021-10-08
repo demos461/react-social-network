@@ -15,13 +15,13 @@ enum ACTION_TYPE {
 export type UserType = {
     name: string
     id: number
-    uniqueUrlName: string | undefined
+    uniqueUrlName: string
     followed: boolean
     photos: {
-        small: string | undefined
-        large: string | undefined
+        small: string
+        large: string
     }
-    status: string | null
+    status: string
 }
 
 
@@ -45,50 +45,49 @@ const initialState: UsersStateType = {
 }
 
 
-export const usersReducer = (state = initialState, action: ActionsType) => {
+export const usersReducer = (state: UsersStateType = initialState, action: UsersActionsType): UsersStateType => {
     switch (action.type) {
-        case ACTION_TYPE.FOLLOW_USER: {
+        case ACTION_TYPE.FOLLOW_USER:
             return {
                 ...state,
-                users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)
+                users: state.users.map(u => u.id === action.payload.userId ? {...u, followed: true} : u)
             }
-        }
         case ACTION_TYPE.UNFOLLOW_USER: {
             return {
                 ...state,
-                users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)
+                users: state.users.map(u => u.id === action.payload.userId ? {...u, followed: false} : u)
             }
         }
         case ACTION_TYPE.SET_USERS: {
             return {
                 ...state,
-                users: [...action.users]
+                ...action.payload,
             }
         }
         case ACTION_TYPE.SET_TOTAL_USERS_COUNT: {
             return {
                 ...state,
-                totalUsersCount: action.usersCount
+                ...action.payload,
             }
         }
         case ACTION_TYPE.CHANGE_CURRENT_PAGE: {
             return {
                 ...state,
-                currentPage: action.page
+                ...action.payload,
             }
         }
         case ACTION_TYPE.TOGGLE_IS_FETCHING: {
             return {
                 ...state,
-                isFetching: action.isFetching
+                ...action.payload,
             }
         }
         case ACTION_TYPE.TOGGLE_IS_FOLLOWING_PROGRESS: {
             return {
                 ...state,
-                followingInProgress: action.isFetching
-                    ? [...state.followingInProgress, action.userId]
-                    : state.followingInProgress.filter(id => id !== action.userId)
+                followingInProgress: action.payload.isFetching
+                    ? [...state.followingInProgress, action.payload.userId]
+                    : state.followingInProgress.filter(id => id !== action.payload.userId)
             }
         }
         default:
@@ -98,7 +97,7 @@ export const usersReducer = (state = initialState, action: ActionsType) => {
     }
 }
 
-type ActionsType =
+type UsersActionsType =
     ReturnType<typeof followSuccess> |
     ReturnType<typeof unfollowSuccess> |
     ReturnType<typeof setUsers> |
@@ -110,54 +109,68 @@ type ActionsType =
 export const followSuccess = (userId: number) => {
     return {
         type: ACTION_TYPE.FOLLOW_USER,
-        userId,
+        payload: {
+            userId,
+        }
     } as const
 }
 
 export const unfollowSuccess = (userId: number) => {
     return {
         type: ACTION_TYPE.UNFOLLOW_USER,
-        userId,
+        payload: {
+            userId,
+        }
     } as const
 }
 
 export const setUsers = (users: UserType[]) => {
     return {
         type: ACTION_TYPE.SET_USERS,
-        users,
+        payload: {
+            users,
+        }
     } as const
 }
 
-export const setTotalUsersCount = (usersCount: number) => {
+export const setTotalUsersCount = (totalUsersCount: number) => {
     return {
         type: ACTION_TYPE.SET_TOTAL_USERS_COUNT,
-        usersCount,
+        payload: {
+            totalUsersCount,
+        }
     } as const
 }
 
-export const changeCurrentPage = (page: number) => {
+export const changeCurrentPage = (currentPage: number) => {
     return {
         type: ACTION_TYPE.CHANGE_CURRENT_PAGE,
-        page,
+        payload: {
+            currentPage,
+        }
     } as const
 }
 
 export const toggleIsFetching = (isFetching: boolean) => {
     return {
         type: ACTION_TYPE.TOGGLE_IS_FETCHING,
-        isFetching,
+        payload: {
+            isFetching,
+        }
     } as const
 }
 
 export const toggleFollowingInProgress = (isFetching: boolean, userId: number) => {
     return {
         type: ACTION_TYPE.TOGGLE_IS_FOLLOWING_PROGRESS,
-        isFetching,
-        userId,
+        payload: {
+            isFetching,
+            userId,
+        },
     } as const
 }
 
-export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch<ActionsType>) => {
+export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch<UsersActionsType>) => {
     dispatch(toggleIsFetching(true))
     usersAPI.getUsers(currentPage, pageSize).then(data => {
         dispatch(setUsers(data.items))
@@ -166,7 +179,7 @@ export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Di
     })
 }
 
-export const follow = (userId: number) => (dispatch: Dispatch<ActionsType>) => {
+export const follow = (userId: number) => (dispatch: Dispatch<UsersActionsType>) => {
     dispatch(toggleFollowingInProgress(true, userId))
     usersAPI.follow(userId).then(data => {
         if (data.resultCode === 0) dispatch(followSuccess(userId))
@@ -174,7 +187,7 @@ export const follow = (userId: number) => (dispatch: Dispatch<ActionsType>) => {
     })
 }
 
-export const unfollow = (userId: number) => (dispatch: Dispatch<ActionsType>) => {
+export const unfollow = (userId: number) => (dispatch: Dispatch<UsersActionsType>) => {
     dispatch(toggleFollowingInProgress(true, userId))
     usersAPI.unfollow(userId).then(data => {
         if (data.resultCode === 0) dispatch(unfollowSuccess(userId))

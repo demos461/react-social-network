@@ -13,24 +13,24 @@ export type PostType = {
 };
 
 export type UserProfileType = {
-    aboutMe: string | undefined
+    aboutMe: string
     contacts: {
-        facebook: string | undefined
-        website: string | undefined
-        vk: string | undefined
-        twitter: string | undefined
-        instagram: string | undefined
-        youtube: string | undefined
-        github: string | undefined
-        mainLink: string | undefined
+        facebook: string
+        website: string
+        vk: string
+        twitter: string
+        instagram: string
+        youtube: string
+        github: string
+        mainLink: string
     }
     lookingForAJob: boolean
-    lookingForAJobDescription: string | undefined
-    fullName: string | undefined
+    lookingForAJobDescription: string
+    fullName: string
     userId: number
     photos: {
-        small: string | undefined
-        large: string | undefined
+        small: string
+        large: string
     }
 }
 
@@ -43,24 +43,24 @@ export type ProfileStateType = {
 
 const initialState: ProfileStateType = {
     profile: {
-        aboutMe: undefined,
+        aboutMe: '',
         contacts: {
-            facebook: undefined,
-            website: undefined,
-            vk: undefined,
-            twitter: undefined,
-            instagram: undefined,
-            youtube: undefined,
-            github: undefined,
-            mainLink: undefined,
+            facebook: '',
+            website: '',
+            vk: '',
+            twitter: '',
+            instagram: '',
+            youtube: '',
+            github: '',
+            mainLink: '',
         },
         lookingForAJob: false,
-        lookingForAJobDescription: undefined,
-        fullName: undefined,
+        lookingForAJobDescription: '',
+        fullName: '',
         userId: 0,
         photos: {
-            small: undefined,
-            large: undefined,
+            small: '',
+            large: '',
         },
     },
     posts: [
@@ -74,25 +74,22 @@ const initialState: ProfileStateType = {
 
 export const profileReducer = (state: ProfileStateType = initialState, action: ProfileActionsType): ProfileStateType => {
     switch (action.type) {
-        case ACTION_TYPE.ADD_POST: {
+        case ACTION_TYPE.ADD_POST:
             return {
                 ...state,
                 posts: [...state.posts, {id: 5, message: state.newPostText}],
                 newPostText: ''
             }
-        }
-        case ACTION_TYPE.UPDATE_NEW_POST_TEXT: {
+        case ACTION_TYPE.UPDATE_NEW_POST_TEXT:
             return {
                 ...state,
-                newPostText: action.newText
+                ...action.payload,
             }
-        }
-        case ACTION_TYPE.SET_USER_PROFILE: {
+        case ACTION_TYPE.SET_USER_PROFILE:
             return {
                 ...state,
-                profile: action.userProfile
+                ...action.payload,
             }
-        }
         default:
             return state
     }
@@ -109,17 +106,21 @@ export const addPost = () => {
     } as const
 }
 
-export const updateNewPostText = (newText: string) => {
+export const updateNewPostText = (newPostText: string) => {
     return {
         type: ACTION_TYPE.UPDATE_NEW_POST_TEXT,
-        newText,
+        payload: {
+            newPostText,
+        },
     } as const
 }
 
-export const setUserProfile = (userProfile: UserProfileType) => {
+export const setUserProfile = (profile: UserProfileType) => {
     return {
         type: ACTION_TYPE.SET_USER_PROFILE,
-        userProfile
+        payload: {
+            profile,
+        },
     } as const
 }
 

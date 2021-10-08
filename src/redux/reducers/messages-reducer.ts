@@ -20,8 +20,7 @@ export type MessagesStateType = {
 };
 
 
-
-const initialState = {
+const initialState: MessagesStateType = {
     dialogs: [
         {id: 1, name: 'Ilya'},
         {id: 2, name: 'Oleg'},
@@ -40,36 +39,35 @@ const initialState = {
 
 export const messagesReducer = (state: MessagesStateType = initialState, action: MessagesActionsType): MessagesStateType => {
     switch (action.type) {
-        case ACTION_TYPE.SEND_MESSAGE: {
-            let newMessageBody = state.newMessageBody
-            const copyState = {...state}
-            copyState.messages = [...state.messages, {id: 6, message: newMessageBody}]
-            copyState.newMessageBody = '';
-            return copyState
-        }
-        case ACTION_TYPE.UPDATE_NEW_MESSAGE_BODY: {
-            const copyState = {...state}
-            copyState.newMessageBody = action.body
-            return copyState
-        }
+        case ACTION_TYPE.SEND_MESSAGE:
+            return {
+                ...state,
+                messages: [...state.messages, {id: 6, message: state.newMessageBody}],
+                newMessageBody: ''
+            }
+        case ACTION_TYPE.UPDATE_NEW_MESSAGE_BODY:
+            return {
+                ...state,
+                ...action.payload,
+            }
         default:
             return state
     }
 }
 
-export type MessagesActionsType = SendMessageType | UpdateNewMessageBodyType
-export type SendMessageType = ReturnType<typeof sendMessage>
-export type UpdateNewMessageBodyType = ReturnType<typeof updateNewMessageBody>
+export type MessagesActionsType = ReturnType<typeof sendMessage> | ReturnType<typeof updateNewMessageBody>
 
 export const sendMessage = () => {
     return {
-        type: ACTION_TYPE.SEND_MESSAGE
+        type: ACTION_TYPE.SEND_MESSAGE,
     } as const
 }
 
-export const updateNewMessageBody = (body: string) => {
+export const updateNewMessageBody = (newMessageBody: string) => {
     return {
         type: ACTION_TYPE.UPDATE_NEW_MESSAGE_BODY,
-        body,
+        payload: {
+            newMessageBody,
+        },
     } as const
 }
