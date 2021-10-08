@@ -9,7 +9,7 @@ import Messages from './Messages';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import {AppRootStateType} from '../../redux/store';
-import {Redirect} from 'react-router-dom';
+import { WithAuthRedirect } from '../../hoc/withAuthRedirect';
 
 type MessagesContainerProps = {
     dialogs: DialogType[]
@@ -17,7 +17,6 @@ type MessagesContainerProps = {
     newMessageBody: string
     updateNewMessageBody: (body: string) => void
     sendMessage: () => void
-    isAuth: boolean
 };
 
 const MessagesContainer: React.FC<MessagesContainerProps> = ({
@@ -26,7 +25,6 @@ const MessagesContainer: React.FC<MessagesContainerProps> = ({
                                                                  newMessageBody,
                                                                  updateNewMessageBody,
                                                                  sendMessage,
-                                                                 isAuth
                                                              }) => {
 
     const onChangeMessage = (text: string) => {
@@ -36,8 +34,6 @@ const MessagesContainer: React.FC<MessagesContainerProps> = ({
     const onSendMessage = () => {
         sendMessage()
     }
-
-    if (!isAuth) return <Redirect to={'/login'}/>
 
     return (
         <Messages
@@ -56,8 +52,6 @@ const mapStateToProps = (state: AppRootStateType) => {
         dialogs: state.messagesPage.dialogs,
         messages: state.messagesPage.messages,
         newMessageBody: state.messagesPage.newMessageBody,
-        isAuth: state.auth.isAuth
-
     }
 }
 
@@ -68,4 +62,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessagesContainer);
+export default WithAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(MessagesContainer));
