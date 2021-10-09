@@ -32,11 +32,21 @@
 }
 
 .aboutMe {
-    padding: 10px 0;
-    border-bottom: 1px solid #eeeeee;
-    margin-bottom: 10px;
+    height: 30px;
+    padding: 5px 0;
 }
 
 .contacts {
 
+}
+
+.status {
+    height: 30px;
+}
+
+.statusInput {
+    background-color: #eee;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
 }
