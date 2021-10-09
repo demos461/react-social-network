@@ -2,12 +2,15 @@ import React from 'react';
 import s from '../../styles/ProfileInfo.module.css';
 import {UserProfileType} from '../../redux/reducers/profile-reducer';
 import userIcon from '../../assets/images/user.png'
+import ProfileStatus from './ProfileStatus';
 
 type ProfileInfoProps = {
     profile: UserProfileType
+    status: string
+    updateUserStatus: (status: string) => void
 };
 
-const ProfileInfo: React.FC<ProfileInfoProps> = ({profile}) => {
+const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, updateUserStatus}) => {
     return <>
         <div className={s.profileInfo}>
             <div className={s.avatar}>
@@ -22,19 +25,20 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({profile}) => {
             </div>
             <div>
                 <div className={s.fullName}>{profile.fullName}</div>
-                <div className={s.aboutMe}>{profile.aboutMe}</div>
+                <ProfileStatus status={status} updateUserStatus={updateUserStatus}/>
+                <div className={s.aboutMe}>About me: {profile.aboutMe}</div>
 
                 <div className={s.descr}>
                     <div className={s.contacts}>
                         <ul>
-                            <li>Facebook: {profile.contacts.facebook}</li>
-                            <li>Website: {profile.contacts.website}</li>
-                            <li>Vk: {profile.contacts.vk}</li>
-                            <li>Twitter: {profile.contacts.twitter}</li>
-                            <li>Instagram: {profile.contacts.instagram}</li>
-                            <li>Youtube: {profile.contacts.youtube}</li>
-                            <li>Github: {profile.contacts.github}</li>
-                            <li>MainLink: {profile.contacts.mainLink}</li>
+                            <li>Facebook: <a href={profile.contacts.facebook}>{profile.contacts.facebook}</a></li>
+                            <li>Website: <a href={profile.contacts.website}>{profile.contacts.website}</a></li>
+                            <li>Vk: <a href={profile.contacts.vk}>{profile.contacts.vk}</a></li>
+                            <li>Twitter: <a href={profile.contacts.twitter}>{profile.contacts.twitter}</a></li>
+                            <li>Instagram: <a href={profile.contacts.instagram}>{profile.contacts.instagram}</a></li>
+                            <li>Youtube: <a href={profile.contacts.youtube}>{profile.contacts.youtube}</a></li>
+                            <li>Github: <a href={profile.contacts.github}>{profile.contacts.github}</a></li>
+                            <li>MainLink: <a href={profile.contacts.mainLink}>{profile.contacts.mainLink}</a></li>
                         </ul>
                     </div>
 
