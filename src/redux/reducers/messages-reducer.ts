@@ -1,6 +1,5 @@
 enum ACTION_TYPE {
     SEND_MESSAGE = 'SEND_MESSAGE',
-    UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY',
 }
 
 export type DialogType = {
@@ -16,7 +15,6 @@ export type MessageType = {
 export type MessagesStateType = {
     dialogs: Array<DialogType>;
     messages: Array<MessageType>;
-    newMessageBody: string;
 };
 
 
@@ -33,7 +31,6 @@ const initialState: MessagesStateType = {
         {id: 2, message: 'How are you?'},
         {id: 3, message: 'I am fine, thank you'},
     ],
-    newMessageBody: '',
 }
 
 
@@ -42,32 +39,20 @@ export const messagesReducer = (state: MessagesStateType = initialState, action:
         case ACTION_TYPE.SEND_MESSAGE:
             return {
                 ...state,
-                messages: [...state.messages, {id: 6, message: state.newMessageBody}],
-                newMessageBody: ''
-            }
-        case ACTION_TYPE.UPDATE_NEW_MESSAGE_BODY:
-            return {
-                ...state,
-                ...action.payload,
+                messages: [...state.messages, {id: 6, ...action.payload}],
             }
         default:
             return state
     }
 }
 
-export type MessagesActionsType = ReturnType<typeof sendMessage> | ReturnType<typeof updateNewMessageBody>
+export type MessagesActionsType = ReturnType<typeof sendMessage>
 
-export const sendMessage = () => {
+export const sendMessage = (message: string) => {
     return {
         type: ACTION_TYPE.SEND_MESSAGE,
-    } as const
-}
-
-export const updateNewMessageBody = (newMessageBody: string) => {
-    return {
-        type: ACTION_TYPE.UPDATE_NEW_MESSAGE_BODY,
         payload: {
-            newMessageBody,
-        },
+            message
+        }
     } as const
 }

@@ -3,45 +3,31 @@ import {
     DialogType,
     MessageType,
     sendMessage,
-    updateNewMessageBody
 } from '../../redux/reducers/messages-reducer';
 import Messages from './Messages';
 import {connect} from 'react-redux';
-import {compose, Dispatch} from 'redux';
+import {compose} from 'redux';
 import {AppRootStateType} from '../../redux/store';
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type MessagesContainerProps = {
     dialogs: DialogType[]
     messages: MessageType[]
-    newMessageBody: string
-    updateNewMessageBody: (body: string) => void
-    sendMessage: () => void
+    sendMessage: (message: string) => void
 };
 
 const MessagesContainer: React.FC<MessagesContainerProps> = ({
                                                                  dialogs,
                                                                  messages,
-                                                                 newMessageBody,
-                                                                 updateNewMessageBody,
                                                                  sendMessage,
                                                              }) => {
 
-    const onChangeMessage = (text: string) => {
-        updateNewMessageBody(text)
-    }
-
-    const onSendMessage = () => {
-        sendMessage()
-    }
 
     return (
         <Messages
             dialogs={dialogs}
             messages={messages}
-            newMessageBody={newMessageBody}
-            updateNewMessageBody={onChangeMessage}
-            sendMessage={onSendMessage}
+            sendMessage={sendMessage}
         />
     );
 };
@@ -51,19 +37,12 @@ const mapStateToProps = (state: AppRootStateType) => {
     return {
         dialogs: state.messagesPage.dialogs,
         messages: state.messagesPage.messages,
-        newMessageBody: state.messagesPage.newMessageBody,
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        sendMessage: () => dispatch(sendMessage()),
-        updateNewMessageBody: (body: string) => dispatch(updateNewMessageBody(body)),
-    }
-}
 
 export default compose<ComponentType>(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, {sendMessage}),
     WithAuthRedirect
 )(MessagesContainer)
 

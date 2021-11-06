@@ -3,7 +3,6 @@ import {profileAPI} from '../../api/API';
 
 enum ACTION_TYPE {
     ADD_POST = 'ADD_POST',
-    UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT',
     SET_USER_PROFILE = 'SET_USER_PROFILE',
     SET_STATUS = 'SET_STATUS',
 }
@@ -38,7 +37,6 @@ export type UserProfileType = {
 export type ProfileStateType = {
     profile: UserProfileType
     posts: Array<PostType>
-    newPostText: string
     status: string
 }
 
@@ -70,7 +68,6 @@ const initialState: ProfileStateType = {
         {id: 2, message: '=^.^='},
         {id: 3, message: 'Cat)0))'},
     ],
-    newPostText: '',
     status: '',
 }
 
@@ -80,13 +77,7 @@ export const profileReducer = (state: ProfileStateType = initialState, action: P
         case ACTION_TYPE.ADD_POST:
             return {
                 ...state,
-                posts: [...state.posts, {id: 5, message: state.newPostText}],
-                newPostText: ''
-            }
-        case ACTION_TYPE.UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                ...action.payload,
+                posts: [...state.posts, {id: 5, ...action.payload}],
             }
         case ACTION_TYPE.SET_USER_PROFILE:
             return {
@@ -105,23 +96,16 @@ export const profileReducer = (state: ProfileStateType = initialState, action: P
 
 export type ProfileActionsType =
     ReturnType<typeof addPost> |
-    ReturnType<typeof updateNewPostText> |
     ReturnType<typeof setUserProfile> |
     ReturnType<typeof setUserStatus>
 
 
-export const addPost = () => {
+export const addPost = (message: string) => {
     return {
         type: ACTION_TYPE.ADD_POST,
-    } as const
-}
-
-export const updateNewPostText = (newPostText: string) => {
-    return {
-        type: ACTION_TYPE.UPDATE_NEW_POST_TEXT,
         payload: {
-            newPostText,
-        },
+            message
+        }
     } as const
 }
 

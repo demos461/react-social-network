@@ -1,40 +1,53 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import Post from './Post';
-import styles from '../../../styles/Posts.module.css';
+import s from '../../../styles/Posts.module.css';
 import {PostType} from '../../../redux/reducers/profile-reducer';
+import {useFormik} from "formik";
 
 type PostsProps = {
     posts: Array<PostType>
-    updateNewPostText: (text: string) => void
-    addPost: () => void
-    newPostText: string
+    addPost: (message: string) => void
 };
 
-const Posts: React.FC<PostsProps> = ({posts, newPostText, updateNewPostText, addPost}) => {
+type FormikErrorType = {
+    message?: string
+}
 
+const Posts: React.FC<PostsProps> = ({posts, addPost}) => {
 
-    const textareaOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewPostText(e.currentTarget.value)
-    }
-    const addPostOnClick = () => {
-        addPost()
-    }
-
+    const formik = useFormik({
+        initialValues: {
+            message: ''
+        },
+        validate: (values) => {
+            const errors: FormikErrorType = {};
+            if (!values.message) {
+                errors.message = 'Required';
+            }
+            if (values.message.length > 140) {
+                errors.message = 'Post length must not be more than 140 characters'
+            }
+            return errors
+        },
+        onSubmit: values => {
+            formik.resetForm()
+            addPost(values.message)
+        },
+    })
 
     return (
         <>
             <div>My posts</div>
-            <div className={styles.posts_form}>
+            <form className={s.posts_form} onSubmit={formik.handleSubmit}>
                 <textarea
-                    className={styles.textarea}
+                    {...formik.getFieldProps('message')}
+                    className={s.textarea}
                     placeholder={'Your news...'}
-                    onChange={textareaOnChange}
-                    value={newPostText}
                 />
-                <div className={styles.btn} onClick={addPostOnClick}>
+                <button className={s.btn} type={'submit'}>
                     Add post
-                </div>
-            </div>
+                </button>
+            </form>
             {posts && posts.map((p) => <Post key={p.id} message={p.message}/>)}
         </>
     );

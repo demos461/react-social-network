@@ -1,28 +1,39 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import styles from '../../styles/Messages.module.css';
 import Dialog from './Dialog';
 import Message from './Message';
 import s from '../../styles/Messages.module.css';
 import {DialogType, MessageType} from '../../redux/reducers/messages-reducer';
+import {useFormik} from "formik";
 
 
 type MessagesProps = {
     dialogs: DialogType[]
     messages: MessageType[]
-    newMessageBody: string
-    updateNewMessageBody: (text: string) => void
-    sendMessage: () => void
+    sendMessage: (message: string) => void
 };
 
-const Messages: React.FC<MessagesProps> = ({dialogs, messages, newMessageBody, updateNewMessageBody, sendMessage}) => {
+type FormikErrorType = {
+    message?: string
+}
 
-    const textareaOnChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewMessageBody(e.currentTarget.value)
-    }
-
-    const sendMessageOnClick = () => {
-        sendMessage()
-    }
+const Messages: React.FC<MessagesProps> = ({dialogs, messages, sendMessage}) => {
+    const formik = useFormik({
+        initialValues: {
+            message: ''
+        },
+        validate: (values) => {
+            const errors: FormikErrorType = {};
+            if (!values.message) {
+                errors.message = 'Required';
+            }
+            return errors
+        },
+        onSubmit: values => {
+            formik.resetForm()
+            sendMessage(values.message)
+        },
+    })
 
     return (
         <div className={styles.dialogs}>
@@ -33,15 +44,14 @@ const Messages: React.FC<MessagesProps> = ({dialogs, messages, newMessageBody, u
             <div className={styles.messages}>
                 {messages &&
                 messages.map((m) => <Message key={m.id} message={m.message}/>)}
-                <div className={s.inputForm}>
+                <form className={s.inputForm} onSubmit={formik.handleSubmit}>
                     <textarea
                         className={s.textarea}
-                        value={newMessageBody}
+                        {...formik.getFieldProps('message')}
                         rows={5}
-                        onChange={textareaOnChange}
                     />
-                    <div className={s.btn} onClick={sendMessageOnClick}>Send</div>
-                </div>
+                    <button className={s.btn} type={'submit'}>Send</button>
+                </form>
 
             </div>
         </div>
