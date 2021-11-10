@@ -13,15 +13,14 @@ enum ACTION_TYPE {
 
 
 export type UserType = {
-    name: string
     id: number
-    uniqueUrlName: string
-    followed: boolean
-    photos: {
-        small: string
-        large: string
-    }
+    name: string
     status: string
+    photos: {
+        small: string | null
+        large: string | null
+    }
+    followed: boolean
 }
 
 
@@ -172,25 +171,25 @@ export const toggleFollowingInProgress = (isFetching: boolean, userId: number) =
 
 export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch<UsersActionsType>) => {
     dispatch(toggleIsFetching(true))
-    usersAPI.getUsers(currentPage, pageSize).then(data => {
-        dispatch(setUsers(data.items))
-        dispatch(setTotalUsersCount(data.totalCount))
+    usersAPI.getUsers(currentPage, pageSize).then(res => {
+        dispatch(setUsers(res.data.items))
+        dispatch(setTotalUsersCount(res.data.totalCount))
         dispatch(toggleIsFetching(false))
     })
 }
 
 export const follow = (userId: number) => (dispatch: Dispatch<UsersActionsType>) => {
     dispatch(toggleFollowingInProgress(true, userId))
-    usersAPI.follow(userId).then(data => {
-        if (data.resultCode === 0) dispatch(followSuccess(userId))
+    usersAPI.follow(userId).then(res => {
+        if (res.data.resultCode === 0) dispatch(followSuccess(userId))
         dispatch(toggleFollowingInProgress(false, userId))
     })
 }
 
 export const unfollow = (userId: number) => (dispatch: Dispatch<UsersActionsType>) => {
     dispatch(toggleFollowingInProgress(true, userId))
-    usersAPI.unfollow(userId).then(data => {
-        if (data.resultCode === 0) dispatch(unfollowSuccess(userId))
+    usersAPI.unfollow(userId).then(res => {
+        if (res.data.resultCode === 0) dispatch(unfollowSuccess(userId))
         dispatch(toggleFollowingInProgress(false, userId))
     })
 }

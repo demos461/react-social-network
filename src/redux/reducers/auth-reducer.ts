@@ -3,7 +3,6 @@ import {authAPI} from '../../api/API';
 
 enum ACTION_TYPE {
     SET_AUTH_USER = 'SET_AUTH_USER',
-    SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN'
 }
 
 export type AuthStateType = {
@@ -25,15 +24,7 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
     switch (action.type) {
         case ACTION_TYPE.SET_AUTH_USER:
             return {
-                ...state,
                 ...action.payload,
-                isAuth: true,
-            }
-        case ACTION_TYPE.SET_IS_LOGGED_IN:
-            return {
-                ...state,
-                ...action.payload
-
             }
         default:
             return state
@@ -42,44 +33,38 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
     }
 }
 
-type AuthActionsType = ReturnType<typeof setAuthUser> | ReturnType<typeof setIsLoggedIn>
+type AuthActionsType = ReturnType<typeof setAuthUser>
 
-export const setAuthUser = (id: number, login: string, email: string) => {
+export const setAuthUser = (id: number, login: string, email: string, isAuth: boolean) => {
     return {
         type: ACTION_TYPE.SET_AUTH_USER,
         payload: {
             id,
             login,
             email,
+            isAuth
         },
     } as const
 }
 
-export const setIsLoggedIn = (isAuth: boolean) => {
-    return {
-        type: ACTION_TYPE.SET_IS_LOGGED_IN,
-        payload: {
-            isAuth
-        }
-    } as const
-}
-
 export const getAuthUser = () => (dispatch: Dispatch<AuthActionsType>) => {
-    authAPI.me().then(data => {
-        let {id, login, email} = data.data
-        if (data.resultCode === 0) dispatch(setAuthUser(id, login, email))
+    authAPI.me().then(res => {
+        let {id, login, email} = res.data.data
+        if (res.data.resultCode === 0) dispatch(setAuthUser(id, login, email, true))
     })
 }
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha: boolean) => (dispatch: Dispatch) => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: boolean) => (dispatch: Dispatch<any>) => {
     authAPI.login(email, password, rememberMe, captcha).then(res => {
-        if (res.data.resultCode === 0) dispatch(setIsLoggedIn(true))
+        if (res.data.resultCode === 0) dispatch(getAuthUser())
     })
 }
 
-export const logout = () => (dispatch: Dispatch) => {
+export const logout = () => (dispatch: Dispatch<AuthActionsType>) => {
     authAPI.logout()
         .then(res => {
-            if (res.data.resultCode === 0) dispatch(setIsLoggedIn(false))
+            if (res.data.resultCode === 0) {
+                dispatch(setAuthUser(0, '', '', false))
+            }
         })
 }

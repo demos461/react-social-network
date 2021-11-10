@@ -13,24 +13,23 @@ export type PostType = {
 };
 
 export type UserProfileType = {
-    aboutMe: string
-    contacts: {
-        facebook: string
-        website: string
-        vk: string
-        twitter: string
-        instagram: string
-        youtube: string
-        github: string
-        mainLink: string
-    }
+    userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    userId: number
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
     photos: {
-        small: string
-        large: string
+        small: string | null
+        large: string | null
     }
 }
 
@@ -43,7 +42,6 @@ export type ProfileStateType = {
 
 const initialState: ProfileStateType = {
     profile: {
-        aboutMe: '',
         contacts: {
             facebook: '',
             website: '',
@@ -129,14 +127,14 @@ export const setUserStatus = (status: string) => {
 
 
 export const getUserProfile = (userId: number) => (dispatch: Dispatch<ProfileActionsType>) => {
-    profileAPI.getUserProfile(userId).then(data => {
-        dispatch(setUserProfile(data))
+    profileAPI.getUserProfile(userId).then(res => {
+        dispatch(setUserProfile(res.data))
     })
 }
 
 export const getUserStatus = (userId: number) => (dispatch: Dispatch<ProfileActionsType>) => {
-    profileAPI.getStatus(userId).then(data => {
-        dispatch(setUserStatus(data))
+    profileAPI.getStatus(userId).then(res => {
+        dispatch(setUserStatus(res.data))
     })
 }
 

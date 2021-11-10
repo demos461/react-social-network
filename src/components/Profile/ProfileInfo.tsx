@@ -26,8 +26,6 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, updateUserSta
             <div>
                 <div className={s.fullName}>{profile.fullName}</div>
                 <ProfileStatus status={status} updateUserStatus={updateUserStatus}/>
-                <div className={s.aboutMe}>About me: {profile.aboutMe}</div>
-
                 <div className={s.descr}>
                     <div className={s.contacts}>
                         <ul>
