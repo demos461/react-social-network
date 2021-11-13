@@ -48,7 +48,7 @@ export const setAuthUser = (id: number, login: string, email: string, isAuth: bo
 }
 
 export const getAuthUser = () => (dispatch: Dispatch<AuthActionsType>) => {
-    authAPI.me().then(res => {
+    return authAPI.me().then(res => {
         let {id, login, email} = res.data.data
         if (res.data.resultCode === 0) dispatch(setAuthUser(id, login, email, true))
     })
