@@ -1,0 +1,42 @@
+.pageNumber {
+    margin: 0 5px;
+    transition: color linear 0.2s;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.pageNumber.active {
+    color: white;
+    font-weight: bold;
+    background-color: cadetblue;
+}
+
+.pageNumber:hover {
+    cursor: pointer;
+    color: gold;
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto 0 auto;
+    width: 650px;
+}
+
+.arrow {
+    margin: 0 5px;
+    transition: color linear 0.2s;
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    background-color: cadetblue;
+}
+
+.arrow:hover {
+    cursor: pointer;
+    color: gold;
+    font-weight: bold;
+}
