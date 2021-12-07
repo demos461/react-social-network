@@ -1,4 +1,4 @@
-import React, {FC, memo} from 'react';
+import React, {ChangeEvent, FC, memo} from 'react';
 import s from '../../styles/ProfileInfo.module.css';
 import {UserProfileType} from '../../redux/reducers/profile-reducer';
 import userIcon from '../../assets/images/user.png'
@@ -8,9 +8,18 @@ type ProfileInfoProps = {
     profile: UserProfileType
     status: string
     updateUserStatus: (status: string) => void
+    isOwner: boolean
+    savePhoto: (image: File) => void
 };
 
-const ProfileInfo: FC<ProfileInfoProps> = memo(({profile, status, updateUserStatus}) => {
+const ProfileInfo: FC<ProfileInfoProps> = memo(({profile, status, updateUserStatus, isOwner,savePhoto}) => {
+
+    const onInputFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.currentTarget.files) {
+            savePhoto(e.currentTarget.files[0])
+        }
+    }
+
     return <>
         <div className={s.profileInfo}>
             <div className={s.avatar}>
@@ -18,6 +27,7 @@ const ProfileInfo: FC<ProfileInfoProps> = memo(({profile, status, updateUserStat
                     src={profile.photos.small ? profile.photos.small : userIcon}
                     alt="avatar"
                 />
+                <div>{isOwner && <input type={'file'} onChange={onInputFileChange}/>}</div>
                 {profile.lookingForAJob && <div className={s.lookingForAJob}>Looking For A Job!</div>}
                 {profile.lookingForAJobDescription && <div className={s.lookingForAJobDescription}>
                     {profile.lookingForAJobDescription}

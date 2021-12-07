@@ -8,12 +8,14 @@ type ProfileProps = {
     profile: UserProfileType
     status: string
     updateUserStatus: (status: string) => void
+    isOwner: boolean
+    savePhoto: (image: File) => void
 };
 
-const Profile: FC<ProfileProps> = memo(({profile,status,updateUserStatus}) => {
+const Profile: FC<ProfileProps> = memo(({profile,status,updateUserStatus,isOwner,savePhoto}) => {
     return (
         <div className={s.profile}>
-            <ProfileInfo profile={profile} status={status} updateUserStatus={updateUserStatus}/>
+            <ProfileInfo profile={profile} status={status} updateUserStatus={updateUserStatus} isOwner={isOwner} savePhoto={savePhoto}/>
             <PostsContainer />
         </div>
     );

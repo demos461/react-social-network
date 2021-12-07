@@ -26,7 +26,7 @@ export const authAPI = {
         return instance.get<ResponseType<MeType>>(`auth/me`)
     },
     login(email: string, password: string, rememberMe: boolean, captcha: boolean) {
-        return instance.post<ResponseType<{ userId: number}>>('auth/login', {
+        return instance.post<ResponseType<{ userId: number }>>('auth/login', {
             email,
             password,
             rememberMe,
@@ -48,6 +48,15 @@ export const profileAPI = {
     updateStatus(status: string) {
         return instance.put<ResponseType>(`profile/status`, {status: status})
     },
+    savePhoto(image: File) {
+        const formData = new FormData()
+        formData.append('image', image)
+        return instance.put<ResponseType<PhotosType>>('profile/photo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+    }
 }
 
 //types
@@ -61,6 +70,13 @@ type MeType = {
     id: number
     email: string
     login: string
+}
+
+type PhotosType = {
+    photos: {
+        small: string
+        large: string
+    }
 }
 
 type UserType = {
