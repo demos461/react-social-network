@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Header from './Header';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../redux/store';
@@ -10,7 +10,7 @@ type HeaderContainerProps = {
     logout: () => void
 }
 
-class HeaderContainer extends Component<HeaderContainerProps> {
+class HeaderContainer extends PureComponent<HeaderContainerProps> {
 
     render() {
         return (

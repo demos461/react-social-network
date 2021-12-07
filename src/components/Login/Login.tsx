@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from '../../styles/Login.module.css'
 import {useFormik} from "formik";
 import {connect} from 'react-redux';
 import {login} from "../../redux/reducers/auth-reducer";
 import {AppRootStateType} from "../../redux/store";
 import {Redirect} from "react-router-dom";
+import {memo} from 'react';
 
 
-type LoginPropsType = {
+type LoginProps = {
     login: (email: string, password: string, rememberMe: boolean, captcha: boolean) => void
     isAuth: boolean
 }
@@ -20,7 +21,7 @@ type FormikErrorType = {
 }
 
 
-const Login: React.FC<LoginPropsType> = ({login, isAuth}) => {
+const Login: FC<LoginProps> = memo(({login, isAuth}) => {
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -79,10 +80,10 @@ const Login: React.FC<LoginPropsType> = ({login, isAuth}) => {
                     name={'rememberMe'}/>
                 remember me
             </label>
-            <button className={s.btn}>LOG IN</button>
+            <button className={s.btn} type={'submit'}>LOG IN</button>
         </form>
     );
-};
+});
 
 const mapStateToProps = (state: AppRootStateType) => {
     return {

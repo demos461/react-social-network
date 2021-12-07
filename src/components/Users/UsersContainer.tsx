@@ -1,4 +1,4 @@
-import React, {ComponentType} from 'react';
+import React, {ComponentType, PureComponent} from 'react';
 import {connect} from 'react-redux';
 import Users from './Users';
 import {AppRootStateType} from '../../redux/store';
@@ -9,7 +9,6 @@ import {
     UserType
 } from '../../redux/reducers/users-reducer';
 import Preloader from '../Preloader/Preloader';
-import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 
 type UsersContainerProps = {
@@ -26,7 +25,7 @@ type UsersContainerProps = {
     getUsers: (currentPage: number, pageSize: number) => void
 }
 
-class UsersContainer extends React.Component<UsersContainerProps> {
+class UsersContainer extends PureComponent<UsersContainerProps> {
 
     componentDidMount() {
         if (this.props.users.length === 0) {
@@ -51,11 +50,6 @@ class UsersContainer extends React.Component<UsersContainerProps> {
             followingInProgress,
         } = this.props;
 
-        let pagesCount = Math.ceil(totalUsersCount / pageSize)
-        let pages = []
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i)
-        }
 
         const followOnClick = (userId: number) => {
             this.props.follow(userId)
@@ -72,7 +66,8 @@ class UsersContainer extends React.Component<UsersContainerProps> {
                     users={users}
                     follow={followOnClick}
                     unfollow={unfollowOnClick}
-                    pages={pages}
+                    totalUsersCount={totalUsersCount}
+                    pageSize={pageSize}
                     currentPage={currentPage}
                     onPageChanged={this.onPageChanged}
                     followingInProgress={followingInProgress}
@@ -103,6 +98,5 @@ export default compose<ComponentType>(
         setTotalUsersCount,
         getUsers
     }),
-    WithAuthRedirect
 )
 (UsersContainer)

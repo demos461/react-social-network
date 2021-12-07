@@ -1,4 +1,4 @@
-import React, {ComponentType} from 'react';
+import React, {ComponentType, FC, memo} from 'react';
 import {
     DialogType,
     MessageType,
@@ -16,12 +16,7 @@ type MessagesContainerProps = {
     sendMessage: (message: string) => void
 };
 
-const MessagesContainer: React.FC<MessagesContainerProps> = ({
-                                                                 dialogs,
-                                                                 messages,
-                                                                 sendMessage,
-                                                             }) => {
-
+const MessagesContainer: FC<MessagesContainerProps> = memo(({dialogs, messages, sendMessage,}) => {
 
     return (
         <Messages
@@ -30,7 +25,7 @@ const MessagesContainer: React.FC<MessagesContainerProps> = ({
             sendMessage={sendMessage}
         />
     );
-};
+});
 
 
 const mapStateToProps = (state: AppRootStateType) => {

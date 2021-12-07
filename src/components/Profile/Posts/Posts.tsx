@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {memo} from 'react';
 import Post from './Post';
 import s from '../../../styles/Posts.module.css';
 import {PostType} from '../../../redux/reducers/profile-reducer';
 import {useFormik} from "formik";
 
 type PostsProps = {
-    posts: Array<PostType>
+    posts: PostType[]
     addPost: (message: string) => void
 };
 
@@ -13,7 +13,7 @@ type FormikErrorType = {
     message?: string
 }
 
-const Posts: React.FC<PostsProps> = ({posts, addPost}) => {
+const Posts: React.FC<PostsProps> = memo(({posts, addPost}) => {
 
     const formik = useFormik({
         initialValues: {
@@ -51,5 +51,5 @@ const Posts: React.FC<PostsProps> = ({posts, addPost}) => {
             {posts && posts.map((p) => <Post key={p.id} message={p.message}/>)}
         </>
     );
-};
+});
 export default Posts;

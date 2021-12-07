@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import './styles/App.css';
 import Navbar from './components/Navbar/Navbar';
 import MessagesContainer from './components/Messages/MessagesContainer';
@@ -8,18 +8,17 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import {connect} from 'react-redux';
-import {Component} from 'react';
 import {initializeApp} from "./redux/reducers/app-reducer";
 import {AppRootStateType} from "./redux/store";
 import Preloader from "./components/Preloader/Preloader";
 
 
-type AppPropsType = {
+type AppPropsTypeType = {
     initialized: boolean
     initializeApp: () => void
 }
 
-class App extends Component<AppPropsType> {
+class App extends PureComponent<AppPropsTypeType> {
 
     componentDidMount() {
         this.props.initializeApp()

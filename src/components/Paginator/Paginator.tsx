@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
+import { memo } from 'react';
 import {FC} from 'react';
 import s from "../../styles/Paginator.module.css";
 
-type PaginatorPropsType = {
+type PaginatorProps = {
     totalItemsCount: number
     pageSize: number
     currentPage: number
@@ -10,7 +11,7 @@ type PaginatorPropsType = {
     portionSize: number
 }
 
-const Paginator: FC<PaginatorPropsType> = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize}) => {
+const Paginator: FC<PaginatorProps> = memo(({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize}) => {
 
     let pagesCount = Math.ceil(totalItemsCount / pageSize)
     let pages = []
@@ -41,6 +42,6 @@ const Paginator: FC<PaginatorPropsType> = ({totalItemsCount, pageSize, currentPa
             <div className={s.arrow} onClick={() => setPortionNumber(portionNumber + 1)}>&gt;</div>}
         </div>
     );
-};
+});
 
 export default Paginator;

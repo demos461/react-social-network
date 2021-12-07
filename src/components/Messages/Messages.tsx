@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from '../../styles/Messages.module.css';
 import Dialog from './Dialog';
 import Message from './Message';
 import s from '../../styles/Messages.module.css';
 import {DialogType, MessageType} from '../../redux/reducers/messages-reducer';
 import {useFormik} from "formik";
+import { memo } from 'react';
 
 
 type MessagesProps = {
@@ -17,7 +18,7 @@ type FormikErrorType = {
     message?: string
 }
 
-const Messages: React.FC<MessagesProps> = ({dialogs, messages, sendMessage}) => {
+const Messages: FC<MessagesProps> = memo(({dialogs, messages, sendMessage}) => {
     const formik = useFormik({
         initialValues: {
             message: ''
@@ -56,6 +57,6 @@ const Messages: React.FC<MessagesProps> = ({dialogs, messages, sendMessage}) => 
             </div>
         </div>
     );
-};
+});
 
 export default Messages;

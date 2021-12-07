@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import s from '../../styles/ProfileInfo.module.css';
 import {UserProfileType} from '../../redux/reducers/profile-reducer';
 import userIcon from '../../assets/images/user.png'
@@ -10,7 +10,7 @@ type ProfileInfoProps = {
     updateUserStatus: (status: string) => void
 };
 
-const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, updateUserStatus}) => {
+const ProfileInfo: FC<ProfileInfoProps> = memo(({profile, status, updateUserStatus}) => {
     return <>
         <div className={s.profileInfo}>
             <div className={s.avatar}>
@@ -44,6 +44,6 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, updateUserSta
             </div>
         </div>
     </>
-};
+});
 
 export default ProfileInfo;

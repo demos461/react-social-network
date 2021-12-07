@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { memo } from 'react';
 import {NavLink} from 'react-router-dom';
 import s from '../../styles/Header.module.css';
 
@@ -8,7 +9,7 @@ type HeaderProps = {
     logout: () => void
 }
 
-const Header: React.FC<HeaderProps> = ({isAuth, login, logout}) => {
+const Header: FC<HeaderProps> = memo( ({isAuth, login, logout}) => {
     return (
         <header className={s.header}>
             <div>&lt;logo/&gt;</div>
@@ -20,6 +21,6 @@ const Header: React.FC<HeaderProps> = ({isAuth, login, logout}) => {
             }
         </header>
     );
-};
+});
 
 export default Header;

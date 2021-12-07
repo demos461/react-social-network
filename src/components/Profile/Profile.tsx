@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import s from '../../styles/Profile.module.css';
 import ProfileInfo from './ProfileInfo';
 import PostsContainer from './Posts/PostsContainer';
@@ -10,13 +10,13 @@ type ProfileProps = {
     updateUserStatus: (status: string) => void
 };
 
-const Profile: React.FC<ProfileProps> = ({profile,status,updateUserStatus}) => {
+const Profile: FC<ProfileProps> = memo(({profile,status,updateUserStatus}) => {
     return (
         <div className={s.profile}>
             <ProfileInfo profile={profile} status={status} updateUserStatus={updateUserStatus}/>
             <PostsContainer />
         </div>
     );
-};
+});
 
 export default Profile;

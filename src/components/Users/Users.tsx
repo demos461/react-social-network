@@ -1,28 +1,31 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import {UserType} from '../../redux/reducers/users-reducer';
 import s from '../../styles/Users.module.css'
 import userIcon from '../../assets/images/user.png'
 import {NavLink} from 'react-router-dom';
+import Paginator from "../Paginator/Paginator";
 
 type UsersProps = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     users: UserType[]
-    pages: number[]
     currentPage: number
     onPageChanged: (page: number) => void
     followingInProgress: number[]
+    totalUsersCount: number
+    pageSize: number
 }
 
-const Users: React.FC<UsersProps> = ({
-                                         users,
-                                         unfollow,
-                                         follow,
-                                         pages,
-                                         currentPage,
-                                         onPageChanged,
-                                         followingInProgress
-                                     }) => {
+const Users: FC<UsersProps> = memo(({
+                                            users,
+                                            unfollow,
+                                            follow,
+                                            currentPage,
+                                            onPageChanged,
+                                            followingInProgress,
+                                            totalUsersCount,
+                                            pageSize
+                                        }) => {
     return (
         <div>
             {users &&
@@ -54,19 +57,15 @@ const Users: React.FC<UsersProps> = ({
 
             ))
             }
-            <div className={s.pagination}>
-                {pages.map(num =>
-                    <div
-                        key={num}
-                        onClick={() => onPageChanged(num)}
-                        className={`${s.pageNumber} ${currentPage === num ? s.active : ''}`}
-                    >
-                        {num}
-                    </div>
-                )}
-            </div>
+            <Paginator
+                totalItemsCount={totalUsersCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChanged={onPageChanged}
+                portionSize={10}
+            />
         </div>
     );
-};
+});
 
 export default Users;

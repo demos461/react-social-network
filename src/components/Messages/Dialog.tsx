@@ -1,13 +1,14 @@
-import React from "react";
+import React, {FC} from "react";
 import styles from "../../styles/Messages.module.css";
 import { NavLink } from "react-router-dom";
+import { memo } from "react";
 
 type DialogProps = {
   name: string;
   id: number;
 };
 
-const Dialog: React.FC<DialogProps> = ({ id, name }) => {
+const Dialog: FC<DialogProps> = memo(({ id, name }) => {
   let path = "/messages/" + id;
   return (
     <div className={styles.dialog}>
@@ -16,6 +17,6 @@ const Dialog: React.FC<DialogProps> = ({ id, name }) => {
       </NavLink>
     </div>
   );
-};
+});
 
 export default Dialog;
