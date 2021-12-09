@@ -9,8 +9,9 @@ import {memo} from 'react';
 
 
 type LoginProps = {
-    login: (email: string, password: string, rememberMe: boolean, captcha: boolean) => void
+    login: (email: string, password: string, rememberMe: boolean, captcha: string) => void
     isAuth: boolean
+    captchaUrl: string
 }
 
 
@@ -21,12 +22,13 @@ type FormikErrorType = {
 }
 
 
-const Login: FC<LoginProps> = memo(({login, isAuth}) => {
+const Login: FC<LoginProps> = memo(({login, isAuth, captchaUrl}) => {
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
-            rememberMe: false
+            rememberMe: false,
+            captcha: ''
         },
         validate: (values) => {
             const errors: FormikErrorType = {};
@@ -44,7 +46,7 @@ const Login: FC<LoginProps> = memo(({login, isAuth}) => {
         },
 
         onSubmit: values => {
-            login(values.email, values.password, values.rememberMe, false)
+            login(values.email, values.password, values.rememberMe, values.captcha)
             formik.resetForm()
         },
     })
@@ -72,6 +74,17 @@ const Login: FC<LoginProps> = memo(({login, isAuth}) => {
             />
             {formik.touched.password &&
             formik.errors.password ? <div className={s.error}>{formik.errors.password}</div> : null}
+
+            {captchaUrl
+                ? <div className={s.captcha}><img src={captchaUrl} alt="captcha"/>
+                    <input
+                        type="text"
+                        placeholder={'Enter captcha'}
+                        {...formik.getFieldProps('captcha')}
+                    />
+                </div>
+                : null}
+
             <label>
                 <input
                     type="checkbox"
@@ -80,6 +93,7 @@ const Login: FC<LoginProps> = memo(({login, isAuth}) => {
                     name={'rememberMe'}/>
                 remember me
             </label>
+
             <button className={s.btn} type={'submit'}>LOG IN</button>
         </form>
     );
@@ -87,7 +101,8 @@ const Login: FC<LoginProps> = memo(({login, isAuth}) => {
 
 const mapStateToProps = (state: AppRootStateType) => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captchaUrl: state.auth.captchaUrl,
     }
 }
 

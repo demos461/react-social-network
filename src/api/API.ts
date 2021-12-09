@@ -25,7 +25,7 @@ export const authAPI = {
     me() {
         return instance.get<ResponseType<MeType>>(`auth/me`)
     },
-    login(email: string, password: string, rememberMe: boolean, captcha: boolean) {
+    login(email: string, password: string, rememberMe: boolean, captcha: string) {
         return instance.post<ResponseType<{ userId: number }>>('auth/login', {
             email,
             password,
@@ -58,8 +58,14 @@ export const profileAPI = {
         })
     },
     updateUserProfile(profile: UpdateUserProfileType) {
-        return instance.put('profile', profile)
+        return instance.put<ResponseType<{ url: string }>>('profile', profile)
     }
+}
+
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instance.get<string>('security/get-captcha-url')
+    },
 }
 
 //types

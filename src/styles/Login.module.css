@@ -17,6 +17,12 @@ label {
     font-size: 14px;
 }
 
+label {
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+
 .form input {
     background-color: #eee;
     padding: 5px;
@@ -35,4 +41,17 @@ label {
     padding: 5px;
     cursor: pointer;
     transition: background-color linear 0.2ms;
+}
+
+.captcha {
+    display: flex;
+}
+
+.captcha img {
+    width: 100px;
+    height: 50px;
+}
+
+.captcha input {
+    width: 150px;
 }
