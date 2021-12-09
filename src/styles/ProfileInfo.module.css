@@ -21,6 +21,25 @@
 
 }
 
+.avatar {
+    display: flex;
+    flex-direction: column;
+}
+
+.avatar button {
+    background-color: cadetblue;
+    text-align: center;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color linear 0.2ms;
+    margin: 10px 0;
+}
+
+
+
 .avatar img {
     height: 200px;
     width: 200px;

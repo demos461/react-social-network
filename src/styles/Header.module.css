@@ -40,4 +40,8 @@
     text-decoration: none;
 }
 
+.login, .logOut:hover {
+    cursor: pointer;
+}
+
 

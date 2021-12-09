@@ -9,7 +9,6 @@
 
 
 .dialog {
-    //background-color: #eee;
     padding: 20px;
     border-bottom: 1px solid #eee;
     text-align: center;
@@ -127,6 +126,7 @@
     background-color: cadetblue;
     text-align: center;
     color: white;
+    border: none;
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;

@@ -68,29 +68,4 @@
     cursor: default;
 }
 
-.pageNumber {
-    margin: 0 5px;
-    transition: color linear 0.2s;
-    padding: 10px 15px;
-    border-radius: 10px;
-}
 
-.pageNumber.active {
-    color: white;
-    font-weight: bold;
-    background-color: cadetblue;
-}
-
-.pageNumber:hover {
-    cursor: pointer;
-    color: gold;
-    font-weight: bold;
-}
-
-.pagination {
-    display: flex;
-    margin: 20px auto 0 auto;
-    width: 400px;
-    overflow-y: hidden;
-    overflow-x: auto;
-}
