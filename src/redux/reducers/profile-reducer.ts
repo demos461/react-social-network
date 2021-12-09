@@ -1,10 +1,13 @@
 import {Dispatch} from 'redux';
-import {profileAPI} from '../../api/API';
+import {profileAPI, UpdateUserProfileType} from '../../api/API';
+import {ThunkDispatch} from "redux-thunk";
+import {AppRootStateType} from "../store";
 
 enum ACTION_TYPE {
-    ADD_POST = 'ADD_POST',
-    SET_USER_PROFILE = 'SET_USER_PROFILE',
-    SET_STATUS = 'SET_STATUS',
+    ADD_POST = 'PROFILE/ADD_POST',
+    SET_USER_PROFILE = 'PROFILE/SET_USER_PROFILE',
+    SET_STATUS = 'PROFILE/SET_STATUS',
+    UPDATE_USER_PHOTO = 'PROFILE/UPDATE_USER_PHOTO',
 }
 
 export type PostType = {
@@ -14,6 +17,7 @@ export type PostType = {
 
 export type UserProfileType = {
     userId: number
+    aboutMe: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
@@ -42,6 +46,7 @@ export type ProfileStateType = {
 
 const initialState: ProfileStateType = {
     profile: {
+        aboutMe: '',
         contacts: {
             facebook: '',
             website: '',
@@ -87,6 +92,16 @@ export const profileReducer = (state: ProfileStateType = initialState, action: P
                 ...state,
                 ...action.payload,
             }
+        case ACTION_TYPE.UPDATE_USER_PHOTO:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: {
+                        ...action.payload
+                    }
+                }
+            }
         default:
             return state
     }
@@ -95,7 +110,8 @@ export const profileReducer = (state: ProfileStateType = initialState, action: P
 export type ProfileActionsType =
     ReturnType<typeof addPost> |
     ReturnType<typeof setUserProfile> |
-    ReturnType<typeof setUserStatus>
+    ReturnType<typeof setUserStatus> |
+    ReturnType<typeof updateUserPhoto>
 
 
 export const addPost = (message: string) => {
@@ -125,6 +141,16 @@ export const setUserStatus = (status: string) => {
     } as const
 }
 
+export const updateUserPhoto = (small: string, large: string) => {
+    return {
+        type: ACTION_TYPE.UPDATE_USER_PHOTO,
+        payload: {
+            small,
+            large
+        },
+    } as const
+}
+
 
 export const getUserProfile = (userId: number) => (dispatch: Dispatch<ProfileActionsType>) => {
     profileAPI.getUserProfile(userId).then(res => {
@@ -142,5 +168,22 @@ export const updateUserStatus = (status: string) => (dispatch: Dispatch<ProfileA
     profileAPI.updateStatus(status).then(res => {
         if (res.data.resultCode === 0)
             dispatch(setUserStatus(status))
+    })
+}
+
+export const savePhoto = (image: File) => (dispatch: Dispatch<ProfileActionsType>) => {
+    profileAPI.savePhoto(image).then(res => {
+        if (res.data.resultCode === 0)
+            dispatch(updateUserPhoto(res.data.data.photos.small, res.data.data.photos.large))
+
+    })
+}
+
+export const updateUserProfile = (profile: UpdateUserProfileType) => (dispatch: ThunkDispatch<AppRootStateType, undefined, ProfileActionsType>, getState: () => AppRootStateType) => {
+    const userId = getState().auth.id
+    profileAPI.updateUserProfile(profile).then(res => {
+        if (res.data.resultCode === 0) {
+            dispatch(getUserProfile(userId))
+        }
     })
 }

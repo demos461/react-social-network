@@ -56,6 +56,9 @@ export const profileAPI = {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    updateUserProfile(profile: UpdateUserProfileType) {
+        return instance.put('profile', profile)
     }
 }
 
@@ -98,6 +101,7 @@ type GetUsersType = {
 
 type GetUserProfileType = {
     userId: number
+    aboutMe: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
@@ -114,6 +118,23 @@ type GetUserProfileType = {
     photos: {
         small: string | null
         large: string | null
+    }
+}
+
+export type UpdateUserProfileType = {
+    aboutMe: string
+    lookingForAJob: boolean
+    lookingForAJobDescription?: string
+    fullName: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
     }
 }
 

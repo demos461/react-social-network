@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {ChangeEvent} from 'react';
-import s from '../../styles/ProfileInfo.module.css'
+import s from '../../../styles/ProfileInfo.module.css'
 
 type ProfileStatusProps = {
     status: string

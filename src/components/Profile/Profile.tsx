@@ -1,6 +1,6 @@
 import React, {FC, memo} from 'react';
 import s from '../../styles/Profile.module.css';
-import ProfileInfo from './ProfileInfo';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 import PostsContainer from './Posts/PostsContainer';
 import {UserProfileType} from '../../redux/reducers/profile-reducer';
 
