@@ -1,5 +1,5 @@
 enum ACTION_TYPE {
-    SEND_MESSAGE = 'SEND_MESSAGE',
+    SEND_MESSAGE = 'MESSAGES/SEND_MESSAGE',
 }
 
 export type DialogType = {

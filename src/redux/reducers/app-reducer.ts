@@ -3,7 +3,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {AppRootStateType} from "../store";
 
 enum ACTION_TYPE {
-    INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS'
+    INITIALIZED_SUCCESS = 'APP/INITIALIZED_SUCCESS'
 }
 
 type AppStateType = {

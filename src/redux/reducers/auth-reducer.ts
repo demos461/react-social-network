@@ -2,7 +2,7 @@ import {Dispatch} from 'redux';
 import {authAPI} from '../../api/API';
 
 enum ACTION_TYPE {
-    SET_AUTH_USER = 'SET_AUTH_USER',
+    SET_AUTH_USER = 'AUTH/SET_AUTH_USER',
 }
 
 export type AuthStateType = {
