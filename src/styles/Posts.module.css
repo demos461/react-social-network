@@ -25,3 +25,7 @@
     cursor: pointer;
     transition: background-color linear 0.2ms;
 }
+
+    a {
+    text-decoration: none;
+}
