@@ -30,7 +30,7 @@ const ProfileData: FC<ProfileDataProps> = memo(({profile, status, onEditModeClic
             </div>
             <div>
                 <div className={s.fullName}>{profile.fullName}</div>
-                <ProfileStatus status={status} updateUserStatus={updateUserStatus}/>
+                <ProfileStatus status={status} updateUserStatus={updateUserStatus} isOwner={isOwner}/>
                 <div className={s.descr}>
                     <div>About me: <span>{profile.aboutMe}</span></div>
 

@@ -5,6 +5,7 @@ import s from '../../../styles/ProfileInfo.module.css'
 type ProfileStatusProps = {
     status: string
     updateUserStatus: (status: string) => void
+    isOwner: boolean
 }
 
 class ProfileStatus extends PureComponent<ProfileStatusProps> {
@@ -35,7 +36,7 @@ class ProfileStatus extends PureComponent<ProfileStatusProps> {
     render() {
         return <div className={s.status}>
             {
-                this.state.editMode
+                this.state.editMode && this.props.isOwner
                     ? <input
                         className={s.statusInput}
                         type="text"
