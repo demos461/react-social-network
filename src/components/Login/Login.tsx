@@ -57,6 +57,11 @@ const Login: FC<LoginProps> = memo(({login, isAuth, captchaUrl}) => {
 
     return (
         <form className={s.form} onSubmit={formik.handleSubmit}>
+            <div className={s.account}>
+                <p>Test account:</p>
+                <p>Email: free@samuraijs.com</p>
+                <p>Password: free</p>
+            </div>
             <div>ACCOUNT LOGIN</div>
 
             <input

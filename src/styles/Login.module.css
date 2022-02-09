@@ -55,3 +55,8 @@ label {
 .captcha input {
     width: 150px;
 }
+
+.account {
+    opacity: 0.5;
+    margin-bottom: 10px;
+}
