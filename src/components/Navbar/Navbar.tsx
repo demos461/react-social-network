@@ -12,19 +12,16 @@ export const Navbar: FC = () => {
         <li>
           <NavLink to={'/profile'} className={s.nav_link} activeClassName={s.active}>
             <ProfileIcon className={s.icon} />
-            Profile
           </NavLink>
         </li>
         <li>
           <NavLink to={'/messages'} className={s.nav_link} activeClassName={s.active}>
             <MessagesIcon className={s.icon} />
-            Messages
           </NavLink>
         </li>
         <li>
           <NavLink to={'/users'} className={s.nav_link} activeClassName={s.active}>
             <UsersIcon className={s.icon} />
-            Users
           </NavLink>
         </li>
       </ul>

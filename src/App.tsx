@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import 'styles/App.css';
+import s from 'styles/App.module.scss';
 import MessagesContainer from 'components/Messages/MessagesContainer';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import UsersContainer from 'components/Users/UsersContainer';
@@ -26,20 +26,18 @@ export const App = () => {
     return <Preloader />;
   }
   return (
-    <>
+    <div className={s.app}>
       <Header />
-      <div className="app-wrapper">
-        <div className="app-content-wrapper">
-          <Switch>
-            <Route path={'/'} exact render={() => <Redirect to={'/profile'} />} />
-            <Route path={'/profile/:userId?'} render={() => <ProfileContainer />} />
-            <Route path={'/messages'} render={() => <MessagesContainer />} />
-            <Route path={'/users'} render={() => <UsersContainer />} />
-            <Route path={'/login'} render={() => <Login />} />
-            <Route render={() => <Error404 />} />
-          </Switch>
-        </div>
+      <div className={s.container}>
+        <Switch>
+          <Route path={'/'} exact render={() => <Redirect to={'/profile'} />} />
+          <Route path={'/profile/:userId?'} render={() => <ProfileContainer />} />
+          <Route path={'/messages'} render={() => <MessagesContainer />} />
+          <Route path={'/users'} render={() => <UsersContainer />} />
+          <Route path={'/login'} render={() => <Login />} />
+          <Route render={() => <Error404 />} />
+        </Switch>
       </div>
-    </>
+    </div>
   );
 };

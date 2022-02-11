@@ -6,17 +6,34 @@
 }
 
 .nav_link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  color: white;
-  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  color: #888;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  line-height: 65px;
+
+  &:hover {
+    color: $hoverColor;
+    .icon {
+      fill: $hoverColor;
+    }
+  }
+}
+
+.active {
+  color: $activeColor;
+  background-color: #fff0da;
+  .icon {
+    fill: $activeColor;
+  }
 }
 
 .icon {
-  fill: white;
-  width: 15px;
-  height: 15px;
+  fill: #888;
+  width: 25px;
+  height: 25px;
 }
 

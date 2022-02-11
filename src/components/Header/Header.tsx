@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from 'redux/store';
 import { Navbar } from 'components/Navbar';
 import s from './style/Header.module.scss';
-import userIcon from 'assets/images/user.png';
+import { ReactComponent as UserIcon } from 'assets/images/user.svg';
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as LogoutIcon } from 'assets/images/logout.svg';
 
 export const Header: FC = () => {
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth);
@@ -23,18 +22,22 @@ export const Header: FC = () => {
     <header className={s.header}>
       <div className={s.container}>
         <div className={s.header_data}>
-          <div className={s.logo}>&lt;logo/&gt;</div>
+          <div className={s.logo}>
+            <NavLink to={'/'}>&lt;logo/&gt;</NavLink>
+          </div>
 
           <Navbar />
 
           {isAuth ? (
-            <div className={s.login}>
+            <div className={s.profile}>
               {login}
-              <img src={photos ? photos : userIcon} alt="avatar" />
-              <LogoutIcon className={s.logoutBtn} onClick={onLogoutBtnClick} />
+              {photos ? <img src={photos} alt="avatar" /> : <UserIcon />}
+              <div className={s.logout} onClick={onLogoutBtnClick}>
+                Logout
+              </div>
             </div>
           ) : (
-            <NavLink to={'/login'} className={s.loginBtn}>
+            <NavLink to={'/login'} className={s.login}>
               Login
             </NavLink>
           )}

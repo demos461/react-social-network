@@ -1,10 +1,16 @@
 @import "src";
 
-.header {
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
 
+.header {
   background-color: $mainColor;
   padding: 10px 0;
-  color: white;
+  color: #888;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.03);
 
   img {
     width: 30px;
@@ -19,48 +25,33 @@
   }
 }
 
-.container {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 0 15px;
-}
-
-.loginBtn {
-  width: 80px;
-  text-align: center;
-  color: white;
-  border-radius: 5px;
-  border: 2px solid white;
-  padding: 5px;
-  text-decoration: none;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.login {
+.profile {
   padding: 5px;
   text-align: center;
-  color: white;
+  color: #888;
   display: flex;
   gap: 20px;
   align-items: center;
 }
 
-.logoutBtn {
-  fill: white;
-  width: 20px;
-  height: 20px;
-
+.logout, .login {
+  color: #888;
   &:hover {
     cursor: pointer;
+    color: $hoverColor
   }
 }
 
 .logo {
   font-weight: bold;
   font-size: 18px;
+  a {
+    color: $activeColor;
+  }
+  a:hover {
+    cursor: pointer;
+    color: #888
+  }
 }
 
 
