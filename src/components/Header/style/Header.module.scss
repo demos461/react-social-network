@@ -1,0 +1,66 @@
+@import "src";
+
+.header {
+
+  background-color: $mainColor;
+  padding: 10px 0;
+  color: white;
+
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+
+  &_data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.loginBtn {
+  width: 80px;
+  text-align: center;
+  color: white;
+  border-radius: 5px;
+  border: 2px solid white;
+  padding: 5px;
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.login {
+  padding: 5px;
+  text-align: center;
+  color: white;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.logoutBtn {
+  fill: white;
+  width: 20px;
+  height: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+
