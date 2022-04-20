@@ -1,0 +1,44 @@
+@import "src";
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 650px;
+    margin: 150px auto 0 auto;
+}
+
+.pageNumber {
+    margin: 0 5px;
+    transition: color linear 0.2s;
+    padding: 10px 15px;
+    border-radius: 50%;
+
+    &.active {
+        color: $mainColor;
+        font-weight: bold;
+        background-color: #fff0da;
+    }
+
+    &:hover {
+        cursor: pointer;
+        color: $mainColor;
+        font-weight: bold;
+        background-color: #fff0da;
+    }
+}
+
+.arrow {
+    margin: 0 5px;
+    transition: color linear 0.2s;
+    padding: 10px 15px;
+    border-radius: 50%;
+    color: $mainColor;
+    font-weight: bold;
+    background-color: #f5f5f5;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #fff0da;
+    }
+}

@@ -1,8 +1,6 @@
 import React from 'react';
-import s from '../../styles/Preloader.module.css';
+import s from './style/Preloader.module.scss';
 
-const Preloader = () => {
-    return <div className={s.circle2}/>
+export const Preloader = () => {
+  return <div className={s.circle2} />;
 };
-
-export default Preloader;

@@ -7,9 +7,9 @@
 }
 
 .header {
-  background-color: $mainColor;
+  background-color: #ffffff;
   padding: 10px 0;
-  color: #888;
+  color: $gray;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.03);
 
   img {
@@ -38,7 +38,7 @@
   color: #888;
   &:hover {
     cursor: pointer;
-    color: $hoverColor
+    color: $mainColor
   }
 }
 
@@ -46,7 +46,7 @@
   font-weight: bold;
   font-size: 18px;
   a {
-    color: $activeColor;
+    color: $mainColor;
   }
   a:hover {
     cursor: pointer;

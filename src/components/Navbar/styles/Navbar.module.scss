@@ -16,18 +16,18 @@
   line-height: 65px;
 
   &:hover {
-    color: $hoverColor;
+    color: $mainColor;
     .icon {
-      fill: $hoverColor;
+      fill: $mainColor;
     }
   }
 }
 
 .active {
-  color: $activeColor;
+  color: $mainColor;
   background-color: #fff0da;
   .icon {
-    fill: $activeColor;
+    fill: $mainColor;
   }
 }
 

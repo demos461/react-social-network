@@ -1,81 +1,84 @@
-import React, { FC, memo } from 'react';
-import { UserType } from '../../redux/reducers/users-reducer';
-import s from '../../styles/Users.module.css';
-import { ReactComponent as UserIcon } from 'assets/images/user.svg';
-import { NavLink } from 'react-router-dom';
+import React, { FC, useEffect } from 'react';
+import {
+  changeCurrentPage,
+  follow,
+  getUsers,
+  unfollow,
+  UserType,
+} from 'redux/reducers/users-reducer';
 import Paginator from '../Paginator/Paginator';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppRootStateType } from 'redux/store';
+import { Preloader } from 'components/Preloader';
+import { User } from 'components/Users/User';
+import s from './style/Users.module.scss';
 
-type UsersProps = {
-  follow: (userId: number) => void;
-  unfollow: (userId: number) => void;
-  users: UserType[];
-  currentPage: number;
-  onPageChanged: (page: number) => void;
-  followingInProgress: number[];
-  totalUsersCount: number;
-  pageSize: number;
-};
+export const Users: FC = () => {
+  const dispatch = useDispatch();
+  const users = useSelector<AppRootStateType, UserType[]>(state => state.users.users);
+  const pageSize = useSelector<AppRootStateType, number>(state => state.users.pageSize);
+  const totalUsersCount = useSelector<AppRootStateType, number>(
+    state => state.users.totalUsersCount,
+  );
+  const currentPage = useSelector<AppRootStateType, number>(
+    state => state.users.currentPage,
+  );
+  const isFetching = useSelector<AppRootStateType, boolean>(
+    state => state.users.isFetching,
+  );
+  const followingInProgress = useSelector<AppRootStateType, number[]>(
+    state => state.users.followingInProgress,
+  );
 
-const Users: FC<UsersProps> = memo(
-  ({
-    users,
-    unfollow,
-    follow,
-    currentPage,
-    onPageChanged,
-    followingInProgress,
-    totalUsersCount,
-    pageSize,
-  }) => {
-    return (
-      <div>
+  const onPageChanged = (pageNumber: number) => {
+    dispatch(changeCurrentPage(pageNumber));
+    dispatch(getUsers(pageNumber, pageSize));
+  };
+
+  const onFollowBtnClick = (userId: number) => {
+    dispatch(follow(userId));
+  };
+
+  const onUnfollowBtnClick = (userId: number) => {
+    dispatch(unfollow(userId));
+  };
+
+  useEffect(() => {
+    if (users.length === 0) {
+      dispatch(getUsers(currentPage, pageSize));
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  if (isFetching) {
+    return <Preloader />;
+  }
+
+  return (
+    <div className={s.container}>
+      <div className={s.users}>
         {users &&
-          users.map(u => (
-            <div key={u.id} className={s.user}>
-              <div className={s.userAvatar}>
-                <NavLink to={'/profile/' + u.id}>
-                  {u.photos.small ? (
-                    <img src={u.photos.small} alt="user-avatar" />
-                  ) : (
-                    <UserIcon />
-                  )}
-                </NavLink>
-                {u.followed ? (
-                  <button
-                    onClick={() => unfollow(u.id)}
-                    disabled={followingInProgress.some(id => id === u.id)}
-                    className={s.btn}
-                  >
-                    Unfollow
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => follow(u.id)}
-                    disabled={followingInProgress.some(id => id === u.id)}
-                    className={s.btn}
-                  >
-                    Follow
-                  </button>
-                )}
-              </div>
-              <div>
-                <NavLink to={'/profile/' + u.id} className={s.userName}>
-                  {u.name}
-                </NavLink>
-                <div className={s.userStatus}>{u.status}</div>
-              </div>
-            </div>
+          users.map(user => (
+            <User
+              userId={user.id}
+              userName={user.name}
+              userPhoto={user.photos.small}
+              userIsFollowed={user.followed}
+              userStatus={user.status}
+              onUnfollowBtnClick={onUnfollowBtnClick}
+              onFollowBtnClick={onFollowBtnClick}
+              followingInProgress={followingInProgress}
+            />
           ))}
-        <Paginator
-          totalItemsCount={totalUsersCount}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChanged={onPageChanged}
-          portionSize={10}
-        />
       </div>
-    );
-  },
-);
 
-export default Users;
+      <Paginator
+        totalItemsCount={totalUsersCount}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onPageChanged={onPageChanged}
+        portionSize={10}
+      />
+    </div>
+  );
+};

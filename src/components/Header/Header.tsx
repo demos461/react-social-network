@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from 'redux/store';
 import { Navbar } from 'components/Navbar';
 import s from './style/Header.module.scss';
-import { ReactComponent as UserIcon } from 'assets/images/user.svg';
+import { ReactComponent as UserIcon } from 'assets/icons/user.svg';
 import { NavLink } from 'react-router-dom';
 
 export const Header: FC = () => {
