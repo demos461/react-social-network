@@ -1,24 +1,56 @@
-import React, {FC, memo} from 'react';
-import s from '../../styles/Profile.module.css';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
-import PostsContainer from './Posts/PostsContainer';
-import {UserProfileType} from '../../redux/reducers/profile-reducer';
+import React, { FC, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppRootStateType } from '../../redux/store';
+import { useParams } from 'react-router-dom';
+import {
+  getUserProfile,
+  getUserStatus,
+  savePhoto,
+  UserProfileType,
+} from 'redux/reducers/profile-reducer';
+import { ProfileEditForm } from './ProfileEditForm';
+import { ProfileInfo } from './ProfileInfo';
 
-type ProfileProps = {
-    profile: UserProfileType
-    status: string
-    updateUserStatus: (status: string) => void
-    isOwner: boolean
-    savePhoto: (image: File) => void
+type ParamsType = {
+  userId?: string;
 };
 
-const Profile: FC<ProfileProps> = memo(({profile,status,updateUserStatus,isOwner,savePhoto}) => {
-    return (
-        <div className={s.profile}>
-            <ProfileInfo profile={profile} status={status} updateUserStatus={updateUserStatus} isOwner={isOwner} savePhoto={savePhoto}/>
-            <PostsContainer />
-        </div>
-    );
-});
+export const Profile: FC = () => {
+  const dispatch = useDispatch();
+  const profile = useSelector<AppRootStateType, UserProfileType>(
+    state => state.profilePage.profile,
+  );
 
-export default Profile;
+  const authUserId = useSelector<AppRootStateType, number>(state => state.auth.id);
+
+  const { userId } = useParams<ParamsType>();
+
+  const [editMode, setEditMode] = useState<boolean>(false);
+
+  const handleSavePhoto = (image: File) => {
+    dispatch(savePhoto(image));
+  };
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(getUserProfile(+userId));
+      dispatch(getUserStatus(+userId));
+    }
+    dispatch(getUserProfile(authUserId));
+    dispatch(getUserStatus(authUserId));
+  }, [userId]);
+
+  return (
+    <>
+      {editMode ? (
+        <ProfileEditForm
+          profile={profile}
+          savePhoto={handleSavePhoto}
+          setEditMode={setEditMode}
+        />
+      ) : (
+        <ProfileInfo profile={profile} onEditModeClick={setEditMode} isOwner={!userId} />
+      )}
+    </>
+  );
+};

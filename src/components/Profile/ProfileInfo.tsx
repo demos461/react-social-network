@@ -1,23 +1,21 @@
 import React, { FC, memo } from 'react';
-import s from '../../../styles/ProfileInfo.module.css';
-import { ReactComponent as UserIcon } from 'assets/images/user.svg';
-import ProfileStatus from './ProfileStatus';
+import s from './style/Profile.module.scss';
+import { ReactComponent as UserIcon } from '../../assets/icons/user.svg';
 import { Contact } from './Contact';
-import { UserProfileType } from '../../../redux/reducers/profile-reducer';
+import { UserProfileType } from '../../redux/reducers/profile-reducer';
+import { ProfileStatus } from './ProfileStatus';
 
 type ProfileDataProps = {
   profile: UserProfileType;
-  status: string;
   onEditModeClick: (bool: boolean) => void;
   isOwner: boolean;
-  updateUserStatus: (status: string) => void;
 };
 
-const ProfileData: FC<ProfileDataProps> = memo(
-  ({ profile, status, onEditModeClick, isOwner, updateUserStatus }) => {
+export const ProfileInfo: FC<ProfileDataProps> = memo(
+  ({ profile, onEditModeClick, isOwner }) => {
     return (
-      <div className={s.profileInfo}>
-        <div className={s.avatar}>
+      <div className={s.profile}>
+        <div className={s.profile__photo}>
           {profile.photos.small ? (
             <img src={profile.photos.small} alt="avatar" />
           ) : (
@@ -32,15 +30,15 @@ const ProfileData: FC<ProfileDataProps> = memo(
               {profile.lookingForAJobDescription}
             </div>
           )}
-          {isOwner && <button onClick={() => onEditModeClick(true)}>Edit profile</button>}
+          {isOwner && (
+            <div className={s.profile__editBtn} onClick={() => onEditModeClick(true)}>
+              Edit profile
+            </div>
+          )}
         </div>
-        <div>
-          <div className={s.fullName}>{profile.fullName}</div>
-          <ProfileStatus
-            status={status}
-            updateUserStatus={updateUserStatus}
-            isOwner={isOwner}
-          />
+        <div className={s.profile__info}>
+          <div className={s.profile__fullName}>{profile.fullName}</div>
+          <ProfileStatus isOwner={isOwner} />
           <div className={s.descr}>
             <div>
               About me: <span>{profile.aboutMe}</span>
@@ -57,5 +55,3 @@ const ProfileData: FC<ProfileDataProps> = memo(
     );
   },
 );
-
-export default ProfileData;
