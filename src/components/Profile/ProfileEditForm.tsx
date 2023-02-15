@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC, memo } from 'react';
 import { useFormik } from 'formik';
 import { updateUserProfile, UserProfileType } from '../../redux/reducers/profile-reducer';
 import { useDispatch } from 'react-redux';
+import s from './style/ProfileEditForm.module.scss';
 
 type ProfileDataFormProps = {
   savePhoto: (image: File) => void;
@@ -42,56 +43,61 @@ export const ProfileEditForm: FC<ProfileDataFormProps> = memo(
     };
     return (
       <form onSubmit={formik.handleSubmit}>
-        <label>
-          My photo:
-          <input type={'file'} onChange={onInputFileChange} />
-        </label>
-        <label>
-          Full name:
-          <input
-            type="text"
-            placeholder={'fullName'}
-            {...formik.getFieldProps('fullName')}
-          />
-        </label>
-        <label>
-          About me:
-          <input
-            type="text"
-            placeholder={'aboutMe'}
-            {...formik.getFieldProps('aboutMe')}
-          />
-        </label>
-        <label>
-          Looking for a job
-          <input
-            type="checkbox"
-            onChange={formik.handleChange}
-            checked={formik.values.lookingForAJob}
-            name={'lookingForAJob'}
-          />
-        </label>
-        <label>
-          My skills:
-          <input
-            type="text"
-            placeholder={'Looking for a job description'}
-            {...formik.getFieldProps('lookingForAJobDescription')}
-          />
-        </label>
-
-        {Object.keys(profile.contacts).map(key => (
-          <label key={key}>
-            {key[0].toUpperCase() + key.slice(1)}:
-            <input
-              type="text"
-              placeholder={key}
-              {...formik.getFieldProps(`contacts.${key}`)}
-            />
-          </label>
-        ))}
-
-        <div>
+        <div className={s.container}>
+          <div className={s.form__about}>
+            <label className={s.form__inputFile}>
+              My photo:
+              <span>Choose file</span>
+              <input type={'file'} onChange={onInputFileChange} />
+            </label>
+            <label>
+              Full name:
+              <input
+                type='text'
+                placeholder={'fullName'}
+                {...formik.getFieldProps('fullName')}
+              />
+            </label>
+            <label>
+              About me:
+              <input
+                type='text'
+                placeholder={'aboutMe'}
+                {...formik.getFieldProps('aboutMe')}
+              />
+            </label>
+            <label className={s.inputCheckbox}>
+              Looking for a job
+              <input
+                type='checkbox'
+                onChange={formik.handleChange}
+                checked={formik.values.lookingForAJob}
+                name={'lookingForAJob'}
+              />
+            </label>
+            <label>
+              My skills:
+              <input
+                type='text'
+                placeholder={'Looking for a job description'}
+                {...formik.getFieldProps('lookingForAJobDescription')}
+              />
+            </label>
+          </div>
+          <div className={s.form__socials}>
+            {Object.keys(profile.contacts).map(key => (
+              <label key={key}>
+                {key[0].toUpperCase() + key.slice(1)}:
+                <input
+                  type='text'
+                  placeholder={'Enter link...'}
+                  {...formik.getFieldProps(`contacts.${key}`)}
+                />
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className={s.buttonsGroup}>
           <button type={'submit'}>Save</button>
           <button type={'button'} onClick={() => setEditMode(false)}>
             Back
