@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from 'redux/reducers/auth-reducer';
 import { AppRootStateType } from 'redux/store';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { FormikErrorType } from './types';
 
 export const Login: FC = () => {
@@ -42,7 +42,7 @@ export const Login: FC = () => {
   });
 
   if (isAuth) {
-    return <Redirect to={'/profile'} />;
+    return <Navigate to={'/profile'} />;
   }
 
   return (

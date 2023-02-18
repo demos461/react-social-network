@@ -1,13 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../redux/store';
-import { useParams } from 'react-router-dom';
-import {
-  getUserProfile,
-  getUserStatus,
-  savePhoto,
-  UserProfileType,
-} from 'redux/reducers/profile-reducer';
+import { Navigate, useParams } from 'react-router-dom';
+import { getUserProfile, getUserStatus, savePhoto, UserProfileType } from 'redux/reducers/profile-reducer';
 import { ProfileEditForm } from './ProfileEditForm';
 import { ProfileInfo } from './ProfileInfo';
 
@@ -39,6 +34,10 @@ export const Profile: FC = () => {
     dispatch(getUserProfile(authUserId));
     dispatch(getUserStatus(authUserId));
   }, [userId]);
+
+  if (!authUserId && !userId) {
+    return <Navigate to={'/login'} />;
+  }
 
   return (
     <>

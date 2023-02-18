@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import s from 'styles/App.module.scss';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Error404, Header, Login, Preloader, Users } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from 'redux/store';
@@ -24,13 +24,13 @@ export const App = () => {
     <div className={s.app}>
       <Header />
       <div className={s.container}>
-        <Switch>
-          <Route path={'/'} exact render={() => <Redirect to={'/profile'} />} />
-          <Route path={'/profile/:userId?'} render={() => <Profile />} />
-          <Route path={'/users'} render={() => <Users />} />
-          <Route path={'/login'} render={() => <Login />} />
-          <Route render={() => <Error404 />} />
-        </Switch>
+        <Routes>
+          <Route path={'/'} element={<Profile />} />
+          <Route path={'/profile/:userId?'} element={<Profile />} />
+          <Route path={'/users'} element={<Users />} />
+          <Route path={'/login'} element={<Login />} />
+          <Route path={'/*'} element={<Error404 />} />
+        </Routes>
       </div>
     </div>
   );
