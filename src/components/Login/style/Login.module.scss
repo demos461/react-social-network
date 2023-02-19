@@ -1,94 +1,104 @@
 @import "src";
 
 .form {
-    background-color: #ffffff;
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.03);
-    border-radius: 20px;
-    width: 450px;
-    height: 450px;
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -225px 0 0 -225px;
+  background-color: #ffffff;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .03);
+  border-radius: 20px;
+  width: 450px;
+  height: 450px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -225px 0 0 -225px;
 
-    input {
-        height: 60px;
-        line-height: 60px;
-        display: block;
-        border: 2px #eee solid;
-        border-radius: 7px;
-        background: none;
-        padding: 10px 20px;
-        font-size: 16px;
+  input {
+    height: 60px;
+    line-height: 60px;
+    display: block;
+    border: 2px #eee solid;
+    border-radius: 7px;
+    background: none;
+    padding: 10px 20px;
+    font-size: 16px;
 
-        &:focus {
-            border: 2px $mainColor solid;
-        }
+    &:focus {
+      border: 2px $mainColor solid;
     }
+  }
 }
 
 .title {
-    color: #111;
-    font-size: 30px;
-    font-weight: bold;
+  color: #111;
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .error {
-    color: red;
-    font-size: 16px;
-    text-align: center;
-    height: 20px;
+  color: red;
+  font-size: 16px;
+  text-align: center;
+  height: 20px;
 }
 
 label {
-    font-size: 16px;
-    color: #888;
+  font-size: 16px;
+  color: #888;
 }
 
 label {
-    flex-direction: row;
-    gap: 5px;
-    align-items: center;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
 }
 
 
 .btn {
-    height: 60px;
-    font-size: 16px;
-    background-color: $mainColor;
-    text-align: center;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    cursor: pointer;
-    transition: background-color linear 0.2ms;
+  height: 60px;
+  font-size: 16px;
+  background-color: $mainColor;
+  text-align: center;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color linear 0.2ms;
 
-    &:hover {
-        background-color: #888;
-    }
+  &:hover {
+    background-color: #888;
+  }
 
 }
 
 .captcha {
-    display: flex;
+  display: flex;
 }
 
 .captcha img {
-    width: 100px;
-    height: 50px;
+  width: 100px;
+  height: 50px;
 }
 
 .captcha input {
-    width: 150px;
+  width: 150px;
 }
 
 .account {
-    opacity: 0.5;
-    margin-bottom: 10px;
-    font-size: 16px;
+  opacity: 0.5;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.rememberMeLabel {
+  display: flex;
+  gap: 15px;
+}
+
+.rememberMeCheckbox {
+  accent-color: $mainColor;
+  color: white;
 }

@@ -81,8 +81,9 @@ export const Login: FC = () => {
         </div>
       ) : null}
 
-      <label>
+      <label className={s.rememberMeLabel}>
         <input
+          className={s.rememberMeCheckbox}
           type="checkbox"
           onChange={formik.handleChange}
           checked={formik.values.rememberMe}
