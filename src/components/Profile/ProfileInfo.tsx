@@ -44,11 +44,13 @@ export const ProfileInfo: FC<ProfileDataProps> = memo(
               About me: <span>{profile.aboutMe}</span>
             </div>
 
-            <div>Contacts:</div>
+
+            <div className={s.profile__contacts}>
             {Object.keys(profile.contacts).map(key => (
               //@ts-ignore
               <Contact key={key} socialName={key} value={profile.contacts[key]} />
             ))}
+            </div>
           </div>
         </div>
       </div>

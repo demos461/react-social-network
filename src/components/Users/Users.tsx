@@ -60,6 +60,7 @@ export const Users: FC = () => {
         {users &&
           users.map(user => (
             <User
+              key={user.id}
               userId={user.id}
               userName={user.name}
               userPhoto={user.photos.small}

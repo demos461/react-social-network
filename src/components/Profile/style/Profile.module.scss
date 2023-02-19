@@ -12,6 +12,7 @@
   }
 
   &__photo {
+    position: relative;
     padding: 15px;
     background-color: #ffffff;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .03);
@@ -24,6 +25,7 @@
       width: 300px;
       border-radius: 10px;
     }
+
 
   }
 
@@ -49,4 +51,27 @@
       background-color: #fff0da;
     }
   }
+
+  &__contacts {
+    margin: 10px 0;
+    display: flex;
+    gap: 5px;
+  }
 }
+
+.lookingForAJob {
+  text-align: center;
+  font-weight: bold;
+  width: 300px;
+  color: white;
+  position: absolute;
+  top: 296px;
+  background-color: $mainColor;
+  border-radius: 0 0 10px 10px;
+}
+
+.lookingForAJobDescription {
+  text-align: center;
+  margin: 5px 0;
+}
+

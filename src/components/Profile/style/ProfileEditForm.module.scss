@@ -39,44 +39,7 @@
 
   .inputCheckbox {
     justify-content: flex-start;
-
-    input[type=checkbox] {
-      position: relative;
-      cursor: pointer;
-    }
-    input[type=checkbox]:before {
-      content: "";
-      display: block;
-      position: absolute;
-      width: 15px;
-      height: 15px;
-      top: 0;
-      left: 0;
-      background-color:#e9e9e9;
-    }
-    input[type=checkbox]:checked:before {
-      content: "";
-      display: block;
-      position: absolute;
-      width: 15px;
-      height: 15px;
-      top: 0;
-      left: 0;
-      background-color: $mainColor;
-    }
-    input[type=checkbox]:checked:after {
-      content: "";
-      display: block;
-      width: 3px;
-      height: 6px;
-      border: solid white;
-      border-width: 0 2px 2px 0;
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-      position: absolute;
-      top: 2px;
-      left: 5px;
-    }
+    accent-color: $mainColor;
   }
 }
 
