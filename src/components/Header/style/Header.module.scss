@@ -32,6 +32,10 @@
   display: flex;
   gap: 20px;
   align-items: center;
+
+  svg {
+    width: 30px;
+  }
 }
 
 .logout, .login {
