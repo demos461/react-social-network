@@ -16,8 +16,8 @@ export const ProfileInfo: FC<ProfileDataProps> = memo(
     return (
       <div className={s.profile}>
         <div className={s.profile__photo}>
-          {profile.photos.small ? (
-            <img src={profile.photos.small} alt="avatar" />
+          {profile.photos.large ? (
+            <img src={profile.photos.large} alt="avatar" />
           ) : (
             <UserIcon />
           )}
