@@ -3,6 +3,7 @@
 .profile {
   margin-top: 15px;
   display: flex;
+  align-items: flex-start;
   gap: 15px;
 
   &__fullName {
@@ -35,6 +36,9 @@
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .03);
     border-radius: 10px;
     width: 100%;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
   }
 
   &__editBtn {
@@ -55,7 +59,20 @@
   &__contacts {
     margin: 10px 0;
     display: flex;
+    flex-direction: column;
     gap: 5px;
+  }
+
+  &__contact {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 10px;
+    color: black;
+
+    &:hover {
+      color: $mainColor;
+    }
   }
 }
 

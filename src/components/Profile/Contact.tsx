@@ -7,6 +7,7 @@ import twitter from '../../assets/icons/twitter.svg';
 import vk from '../../assets/icons/vk.svg';
 import website from '../../assets/icons/website.svg';
 import youtube from '../../assets/icons/youtube.svg';
+import s from './style/Profile.module.scss'
 
 type ContactsProps = {
   socialName: string;
@@ -28,10 +29,9 @@ export const Contact: FC<ContactsProps> = memo(({ socialName, value }) => {
   //@ts-ignore
   const icon = socialIconLinks[socialName];
   return value ? (
-    <div>
-      <a href={value} style={{ color: 'black' }} target={'_blank'} rel='noreferrer'>
+      <a className={s.profile__contact} href={value} target={'_blank'} rel='noreferrer'>
         <img src={icon} alt={socialName} />
+        {value.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "")}
       </a>
-    </div>
   ) : null;
 });
