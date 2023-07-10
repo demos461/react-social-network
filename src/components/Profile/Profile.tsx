@@ -2,7 +2,13 @@ import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../redux/store';
 import { Navigate, useParams } from 'react-router-dom';
-import { getUserProfile, getUserStatus, savePhoto, UserProfileType } from 'redux/reducers/profile-reducer';
+import {
+  getUserFriends,
+  getUserProfile,
+  getUserStatus,
+  ProfileStateType,
+  savePhoto,
+} from 'redux/reducers/profile-reducer';
 import { ProfileEditForm } from './ProfileEditForm';
 import { ProfileInfo } from './ProfileInfo';
 
@@ -12,9 +18,10 @@ type ParamsType = {
 
 export const Profile: FC = () => {
   const dispatch = useDispatch();
-  const profile = useSelector<AppRootStateType, UserProfileType>(
-    state => state.profilePage.profile,
+  const { profile, friends } = useSelector<AppRootStateType, ProfileStateType>(
+    state => state.profilePage,
   );
+
 
   const authUserId = useSelector<AppRootStateType, number>(state => state.auth.id);
 
@@ -33,6 +40,7 @@ export const Profile: FC = () => {
     }
     dispatch(getUserProfile(authUserId));
     dispatch(getUserStatus(authUserId));
+    dispatch(getUserFriends());
   }, [userId]);
 
   if (!authUserId && !userId) {
@@ -44,11 +52,12 @@ export const Profile: FC = () => {
       {editMode ? (
         <ProfileEditForm
           profile={profile}
+
           savePhoto={handleSavePhoto}
           setEditMode={setEditMode}
         />
       ) : (
-        <ProfileInfo profile={profile} onEditModeClick={setEditMode} isOwner={!userId} />
+        <ProfileInfo profile={profile} onEditModeClick={setEditMode} isOwner={!userId} friends={friends} />
       )}
     </>
   );

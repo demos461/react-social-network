@@ -30,7 +30,7 @@
 
   }
 
-  &__info {
+  &__right_container {
     padding: 15px;
     background-color: #ffffff;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .03);
@@ -74,6 +74,13 @@
       color: $mainColor;
     }
   }
+
+  &__left_container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
 }
 
 .lookingForAJob {
@@ -91,4 +98,54 @@
   text-align: center;
   margin: 5px 0;
 }
+
+.friends {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  background-color: #ffffff;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .03);
+  border-radius: 10px;
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  &__list {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+
+    a {
+      text-decoration: none;
+      color: $gray;
+    }
+
+    &_item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #f5f5f5;
+        color: $mainColor;
+      }
+
+      img,svg {
+        max-height: 80px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
 

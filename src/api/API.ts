@@ -59,6 +59,9 @@ export const profileAPI = {
     },
     updateUserProfile(profile: UpdateUserProfileType) {
         return instance.put<ResponseType<{ url: string }>>('profile', profile)
+    },
+    getFriends() {
+        return instance.get<GetUsersType>('users?page=1&count=4&friend=true')
     }
 }
 

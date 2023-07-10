@@ -2,17 +2,15 @@ import { Dispatch } from 'redux';
 import { profileAPI, UpdateUserProfileType } from '../../api/API';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppRootStateType } from '../store';
+import { UserType } from './users-reducer';
 
 enum ACTION_TYPE {
   SET_USER_PROFILE = 'PROFILE/SET_USER_PROFILE',
   SET_STATUS = 'PROFILE/SET_STATUS',
   UPDATE_USER_PHOTO = 'PROFILE/UPDATE_USER_PHOTO',
+  SET_USER_FRIENDS = 'PROFILE/SET_USER_FRIENDS'
 }
 
-export type PostType = {
-  id: number;
-  message: string;
-};
 
 export type UserProfileType = {
   userId: number;
@@ -39,6 +37,10 @@ export type UserProfileType = {
 export type ProfileStateType = {
   profile: UserProfileType;
   status: string;
+  friends: {
+    items: UserType[],
+    totalCount: number
+  }
 };
 
 const initialState: ProfileStateType = {
@@ -65,6 +67,10 @@ const initialState: ProfileStateType = {
   },
 
   status: '',
+  friends: {
+    items: [],
+    totalCount: 0,
+  },
 };
 
 export const profileReducer = (
@@ -92,6 +98,13 @@ export const profileReducer = (
           },
         },
       };
+    case ACTION_TYPE.SET_USER_FRIENDS:
+      return {
+        ...state,
+        friends: {
+           ...action.payload
+        }
+      };
     default:
       return state;
   }
@@ -100,7 +113,8 @@ export const profileReducer = (
 export type ProfileActionsType =
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setUserStatus>
-  | ReturnType<typeof updateUserPhoto>;
+  | ReturnType<typeof updateUserPhoto>
+  | ReturnType<typeof setUserFriends>
 
 export const setUserProfile = (profile: UserProfileType) => {
   return {
@@ -126,6 +140,16 @@ export const updateUserPhoto = (small: string, large: string) => {
     payload: {
       small,
       large,
+    },
+  } as const;
+};
+
+export const setUserFriends = (items: UserType[], totalCount: number) => {
+  return {
+    type: ACTION_TYPE.SET_USER_FRIENDS,
+    payload: {
+      items,
+      totalCount,
     },
   } as const;
 };
@@ -160,14 +184,20 @@ export const savePhoto = (image: File) => (dispatch: Dispatch<ProfileActionsType
 
 export const updateUserProfile =
   (profile: UpdateUserProfileType) =>
-  (
-    dispatch: ThunkDispatch<AppRootStateType, undefined, ProfileActionsType>,
-    getState: () => AppRootStateType,
-  ) => {
-    const userId = getState().auth.id;
-    profileAPI.updateUserProfile(profile).then(res => {
-      if (res.data.resultCode === 0) {
-        dispatch(getUserProfile(userId));
-      }
-    });
-  };
+    (
+      dispatch: ThunkDispatch<AppRootStateType, undefined, ProfileActionsType>,
+      getState: () => AppRootStateType,
+    ) => {
+      const userId = getState().auth.id;
+      profileAPI.updateUserProfile(profile).then(res => {
+        if (res.data.resultCode === 0) {
+          dispatch(getUserProfile(userId));
+        }
+      });
+    };
+
+export const getUserFriends = () => (dispatch: Dispatch) => {
+  profileAPI.getFriends().then(res => {
+    dispatch(setUserFriends(res.data.items, res.data.totalCount));
+  });
+};
